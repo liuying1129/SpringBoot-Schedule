@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yklis.dao.JobUploadFeeDao">
+    
+    <!-- 对于普通JAVA类型,parameterType、resultType使用的是mybatis的类型别名，大小写不敏感 -->
+    <select id="selectWaitUploadFee" resultType="hashmap">		  
+		select 
+				 SC_YDH, 
+				 '36' as ShiXiao, 
+				 isnull(YDH_JS,0) as YDH_JS, 
+				 isnull(YDH_WEIGHT,0) as YDH_WEIGHT, 
+				 isnull(YDH_VOLUME,0) as YDH_VOLUME 
+				 from FeeInfo fi 
+				 where isnull(fi.Send_Flag,0)&lt;&gt;1 
+				 and fi.SC_COMPANY='华润'  
+	</select>
+	
+    <select id="selectBJiFeiRecNum" resultType="int">		  
+		select count(*) from B_JIFEI where XINGCHEDANHAO=#{0} 
+	</select>
+    
+    <select id="selectXiuGaiBiaoShi" resultType="string">		  
+		select XiuGaiBiaoShi from B_JIFEI where XINGCHEDANHAO=#{0} 
+	</select>
+    
+	<update id="updateBJiFei" parameterType="com.yklis.entity.CrJiFeiEntity">         
+        update B_JIFEI set SHIXIAO=#{shiXiao},JIANSHU=#{jianShu},ZHONGLIANG=#{zhongLiang},TIJI=#{tiJi},TIJIAOSHIJIAN=getdate() where XINGCHEDANHAO=#{xingCheDanHao}
+    </update> 
+    
+    <insert id="insertBJiFei" parameterType="com.yklis.entity.CrJiFeiEntity">
+        insert into B_JIFEI 
+				( 
+				XINGCHEDANHAO
+				, SHIXIAO
+				, JIANSHU
+				, ZHONGLIANG
+				, TIJI
+				,TIJIAOSHIJIAN
+				,Xiugaibiaoshi
+				) 
+				 values (
+				 #{xingCheDanHao}
+				 ,#{shiXiao}
+				 ,#{jianShu}
+				 ,#{zhongLiang}
+				 ,#{tiJi}
+				 ,getdate()
+				 ,    0
+				 )
+	</insert>
+		
+	<update id="updateFeeInfo">         
+        update FeeInfo set Send_Flag=1 where SC_COMPANY=#{0} and SC_YDH=#{1}
+    </update> 
+    
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yklis.dao.CommCodeDao">  
+        
+    <resultMap type="com.yklis.entity.CommCodeEntity" id="commCodeMap">        
+        <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
+		<id property="unid" column="unid"/>
+		<result property="typeName" column="typeName"/>
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="pym" column="pym"/>
+		<result property="wbm" column="wbm"/>
+		<result property="remark" column="remark"/>
+		<result property="reserve" column="reserve"/>
+		<result property="reserve2" column="reserve2"/>
+		<result property="reserve3" column="reserve3"/>
+		<result property="reserve4" column="reserve4"/>
+		<result property="reserve5" column="reserve5"/>
+		<result property="reserve6" column="reserve6"/>
+		<result property="reserve7" column="reserve7"/>
+		<result property="reserve8" column="reserve8"/>
+		<result property="reserve9" column="reserve9"/>
+		<result property="reserve10" column="reserve10"/>
+	</resultMap>
+
+    <select id="selectCommCode" resultMap="commCodeMap" parameterType="com.yklis.entity.CommCodeEntity">		  
+		select * 
+		from CommCode  
+		<where>
+			<if test="unid != null and unid !=0 ">
+	            unid=#{unid}
+	        </if> 
+	        <if test="typeName != null and typeName !='' ">
+	            and typeName=#{typeName}
+	        </if> 
+	        <if test="id != null and id !='' ">
+	            and id=#{id}
+	        </if> 
+	        <if test="name != null and name !='' ">
+	            and name=#{name}
+	        </if> 
+	        <if test="pym != null and pym !='' ">
+	            and pym=#{pym}
+	        </if> 
+	        <if test="wbm != null and wbm !='' ">
+	            and wbm=#{wbm}
+	        </if> 
+	        <if test="remark != null and remark !='' ">
+	            and remark=#{remark}
+	        </if> 
+	        <if test="reserve != null and reserve !='' ">
+	            and reserve=#{reserve}
+	        </if> 
+	        <if test="reserve2 != null and reserve2 !='' ">
+	            and reserve2=#{reserve2}
+	        </if> 
+	        <if test="reserve3 != null and reserve3 !='' ">
+	            and reserve3=#{reserve3}
+	        </if> 
+	        <if test="reserve4 != null and reserve4 !='' ">
+	            and reserve4=#{reserve4}
+	        </if> 
+	        <if test="reserve5 != null and reserve5 !=0 ">
+	            and reserve5=#{reserve5}
+	        </if> 
+	        <if test="reserve6 != null and reserve6 !=0 ">
+	            and reserve6=#{reserve6}
+	        </if> 
+	        <if test="reserve7 != null and reserve7 !=0 ">
+	            and reserve7=#{reserve7}
+	        </if> 
+	        <if test="reserve8 != null and reserve8 !=0 ">
+	            and reserve8=#{reserve8}
+	        </if> 
+	        <if test="reserve9 != null ">
+	            and reserve9=#{reserve9}
+	        </if> 
+	        <if test="reserve10 != null ">
+	            and reserve10=#{reserve10}
+	        </if> 
+		</where>
+	</select>
+    
+</mapper>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.yklis.dao.JobDownloadBillDao">  
+    
+    <resultMap type="com.yklis.entity.CrShouHuoKeHuEntity" id="crShouHuoKeHuMap">        
+        <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
+		<id property="shouHuoKeHuBianHao" column="shouHuoKeHuBianHao"/>
+		<result property="keHuMingCheng" column="keHuMingCheng"/>
+		<result property="xiuGaiBiaoShi" column="XiuGaiBiaoShi"/>
+	</resultMap>
+    
+    <resultMap type="com.yklis.entity.CrShouHuoDiZhiEntity" id="crShouHuoDiZhiMap">        
+        <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
+		<id property="diZhiBianHao" column="diZhiBianHao"/>
+		<result property="shouHuoKeHuBianHao" column="shouHuoKeHuBianHao"/>
+		<result property="keHuDiZhi" column="keHuDiZhi"/>
+		<result property="leHuLianXiRen" column="leHuLianXiRen"/>
+		<result property="leHuLianXiFangShi" column="leHuLianXiFangShi"/>
+		<result property="xiuGaiBiaoShi" column="XiuGaiBiaoShi"/>
+	</resultMap>
+    
+    <resultMap type="com.yklis.entity.CrHuoPinXinXiEntity" id="crHuoPinXinXiMap">        
+        <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
+		<id property="huoPinBianHao" column="huoPinBianHao"/>
+		<result property="huoPinMingCheng" column="HuoPinMingCheng"/>
+		<result property="huoPinGuiGe" column="HuoPinGuiGe"/>
+		<result property="huoPinXingHao" column="HuoPinXingHao"/>
+		<result property="xiuGaiBiaoShi" column="XiuGaiBiaoShi"/>
+	</resultMap>
+       
+    <resultMap id="crDingDanHuoPinMap" type="com.yklis.entity.CrDingDanHuoPinEntity">  
+        <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
+        <result property="dingDanBianHao" column="DingDanBianHao" />  
+        <result property="huoPinBianHao" column="huoPinBianHao" />  
+        <result property="huoPinPiCi" column="HuoPinPiCi" />
+        <result property="huoPinShuLiang" column="HuoPinShuLiang" />
+        <result property="huoPinDanWei" column="HuoPinDanWei" />                  
+                  
+        <association property="crHuoPinXinXiEntity" resultMap="crHuoPinXinXiMap" />  
+    </resultMap>
+        
+    <!--  注意：两张表中的主键id字段名要唯一，例如不能都写id，不然的话，在一对多查询的时候就会出现：级联出来的明细项只有一条记录 -->
+    <resultMap id="crBdingDanMap" type="com.yklis.entity.CrBdingDanEntity">
+        <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
+        <id property="dingDanBianHao" column="dingDanBianHao"/>
+        <result property="yunShuMoShi" column="yunShuMoShi"/>
+        <result property="fuWuFangShi" column="fuWuFangShi"/>
+        <result property="jieSuanFangShi" column="jieSuanFangShi"/>
+        <result property="faHuoRiQi" column="faHuoRiQi"/>
+        <result property="shiXiaoYaoQiu" column="shiXiaoYaoQiu"/>
+        <result property="shouHuoKeHuBianHao" column="shouHuoKeHuBianHao"/>
+        <result property="liLunJianShu" column="liLunJianShu"/>
+        <result property="jianShu" column="jianShu"/>
+        <result property="zhongLiang" column="zhongLiang"/>
+        <result property="shiFaZhan" column="shiFaZhan"/>
+        <result property="muDiZhan" column="muDiZhan"/>
+        <result property="xuFanHuiWenDuJi" column="xuFanHuiWenDuJi"/>
+        <result property="shiFouTouBao" column="shiFouTouBao"/>
+        <result property="touBaoJinE" column="touBaoJinE"/>
+        <result property="dingDanBeiZhu" column="dingDanBeiZhu"/>
+        <result property="dangQianZhuangTai" column="dangQianZhuangTai"/>
+        <result property="xianLuHao" column="xianLuHao"/>
+        <result property="erpDingDanHao" column="erpDingDanHao"/>
+        <result property="carNo" column="car_no"/>
+        <result property="xingCheDanHao" column="xingCheDanHao"/>
+        <result property="shangPinLeiXing" column="shangPinLeiXing"/>
+        
+        <!-- 一对一 -->
+        <association property="crShouHuoKeHuEntity" resultMap="crShouHuoKeHuMap" />
+        <association property="crShouHuoDiZhiEntity" resultMap="crShouHuoDiZhiMap" />
+        
+        <!-- 一对多 -->
+        <collection property="crDingDanHuoPinEntityList" ofType="com.yklis.entity.CrDingDanHuoPinEntity" resultMap="crDingDanHuoPinMap"/>
+    </resultMap>
+    	
+    <!-- 注意到这个SQL，要确保所有的别名都是唯一且无歧义的 -->
+    <select id="selectBill" resultMap="crBdingDanMap">		  
+		select dd.XingCheDanHao,dd.DingDanBianHao,dd.FaHuoRiQi,dd.JianShu,dd.xianluhao,dd.erpdingdanhao,dd.car_no,dd.SHANGPINLEIXING, 
+				 ddhp.HuoPinBianHao,ddhp.HuoPinShuLiang,ddhp.HuoPinDanWei,ddhp.HuoPinPiCi,
+				 hpxx.HuoPinMingCheng,
+				 kh.KeHuMingCheng,dz.KeHuDiZhi
+				 from B_DingDan dd 
+				 inner join B_DingDanHuoPin ddhp on ddhp.DingDanBianHao=dd.DingDanBianHao 
+				 inner join B_HuoPinXinXi hpxx on hpxx.HuoPinBianHao=ddhp.HuoPinBianHao 
+				 inner join B_ShouHuoKeHu kh on kh.ShouHuoKeHuBianHao=dd.ShouHuoKeHuBianHao 
+				 inner join B_ShouHuoDiZhi dz on dz.DiZhiBianHao=dd.MuDiZhan 
+				 where isnull(dd.DangQianZhuangTai,'')='0'
+				 --where dd.dingdanbianhao='0002846-850-TT'
+				 order by dd.DingDanBianHao  
+	</select>
+	
+    <!-- 插入后，自动将自增长值赋值给参数对象WaitSchedEntity的属性unid。因此，可通过WaitSchedEntity对应的getter方法获取！ -->
+    <!--microsoft自带的sql server 2000的JDBC驱动不支持 useGeneratedKeys="true" keyProperty="id" -->
+    <insert id="insertWaitSched" parameterType="com.yklis.entity.WaitSchedEntity" useGeneratedKeys="true" keyProperty="unid">
+		insert into Wait_Sched 
+		( 
+		  SC_COMPANY
+		, SC_YDH
+		, SC_CUSTOMER
+		, SC_SendAddr
+		, SC_BillNo
+		, SC_BillDetNo
+		, SC_SIZE_DESC
+		, SC_SKU_DESC
+		, SC_ORIG_PKT_QTY
+		, SC_UNITS
+		, SC_BATCH_NBR
+		, SC_Request_Send_Time
+		, Pick_Date_time
+		, RTE_NBR
+		, Send_Aear
+		, kcfsl
+		, User_Name
+		, SC_BillNo_Js
+		, Reserve
+		, Reserve2
+		, Reserve3
+		)
+		 VALUES
+        (
+        #{scCompany},
+        #{scYdh},
+		#{scCustomer},
+		#{scSendAddr},
+		#{scBillNo},
+		null,
+		#{scSizeDesc},
+		#{scSkuDesc},
+		#{scOrigPktQty},
+		#{scUnits},
+		#{scBatchNbr},
+		#{scRequestSendTime},
+		#{pickDatetime},
+		#{rteNbr},
+		null,
+		#{kcfsl},
+		#{userName},
+		#{scBillNoJs},
+		#{reserve},
+		#{reserve2},
+		#{reserve3}
+        )   
+	</insert>
+	
+	<update id="updateBillStatus">         
+        update B_DingDan set DangQianZhuangTai='E' where DingDanBianHao=#{0}  
+    </update> 
+    
+</mapper>
