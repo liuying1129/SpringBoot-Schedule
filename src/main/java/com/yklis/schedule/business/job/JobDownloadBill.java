@@ -59,7 +59,7 @@ public class JobDownloadBill {
 			CustomerContextHolder.clearCustomerType();
 		}	
 		
-		jobDownloadBillService.downloadBill();			
+		jobDownloadBillService.downloadBill();
 
 	}
 }

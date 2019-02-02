@@ -1,6 +1,8 @@
 package com.yklis.schedule.util;
 
 import java.beans.PropertyVetoException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,26 @@ import org.springframework.stereotype.Component;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+ * C3P0连接池
+ * 主数据源
+ * 
+ * 享元模式(又叫蝇量模式)
+ * 用HashMap存储对象,重用
+ * 使quartz可读取到该连接属性,实现quartz集群(JobStoreTX)
+ * @author liuyi
+ *
+ */
 @Component//或@Configuration
 @PropertySource(value = { "classpath:jdbc.properties"})
 public class MasterDataSource {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    
+	//final
+	//如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改
+	//如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象.但是对象本身是可以被修改的
+    public static final Map<String, String> ctxPropertiesMap = new HashMap<>();    
 
     //@Value的作用是将我们配置文件的属性读出来
     @Value("${jdbc.driverClass}")
@@ -56,6 +73,11 @@ public class MasterDataSource {
 			dataSource.setUser(user);
 			dataSource.setPassword(password);
 									
+			ctxPropertiesMap.put("driverClass", driverClass);
+			ctxPropertiesMap.put("jdbcUrl", jdbcUrl);
+			ctxPropertiesMap.put("user", user);
+			ctxPropertiesMap.put("password", password);
+
 			//连接池在无空闲连接可用时一次性创建的新数据库连接数,default : 3
 			//dataSource.setAcquireIncrement(Integer.parseInt(customerType.get("acquireIncrement").toString()));
 			

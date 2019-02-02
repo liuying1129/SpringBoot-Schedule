@@ -24,7 +24,7 @@
 
 	<dependencies>
 		<dependency>
-			<!-- 自带logback依赖,logback实现了SLF4J -->
+			<!-- 自带logback依赖(spring-boot-starter-logging),logback实现了SLF4J -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
@@ -36,8 +36,10 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-jdbc</artifactId>
+			<!-- 依赖spring-boot-starter-jdbc -->
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>2.0.0</version>
 		</dependency>
 		
 		<!-- 1.4版本前:spring-boot-starter-redis，1.4版本后:spring-boot-starter-data-redis -->
@@ -49,32 +51,22 @@
 		<dependency>
 			<groupId>redis.clients</groupId>
 			<artifactId>jedis</artifactId>
-			<version>2.9.0</version>
-		</dependency>        
-		
-		<dependency>
-			<groupId>com.mchange</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.5.1</version>
 		</dependency>
 		
 		<dependency>
+		    <groupId>com.mchange</groupId>
+		    <artifactId>c3p0</artifactId>
+		    <version>0.9.5.3</version>
+		</dependency>
+				
+		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
-			<version>2.2.1</version>
-	        <exclusions>  
-	            <exclusion>
-	            	<!-- 该版本quartz依赖0.9.1.1版本c3p0,上面已依赖0.9.5.1,故排除掉 -->
-	                <artifactId>c3p0</artifactId>
-	                <groupId>c3p0</groupId>
-	            </exclusion>
-	        </exclusions>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz-jobs</artifactId>
-			<version>2.2.1</version>
 		</dependency>
 		
         <!-- alibaba的JSON处理库 -->
@@ -85,29 +77,21 @@
         </dependency>
         
 		<!-- jstl JSP标准标签库  -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>javax.servlet</groupId>
 		    <artifactId>jstl</artifactId>
-		    <version>1.2</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- 返回jsp页面还需要这个依赖 -->
-		<dependency>
+		<!-- <dependency>
 		    <groupId>org.apache.tomcat.embed</groupId>
 		    <artifactId>tomcat-embed-jasper</artifactId>
 		    <scope>provided</scope>
-		</dependency>
+		</dependency> -->
 		
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
-			<version>1.3.1</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.mybatis.spring.boot</groupId>
-		    <artifactId>mybatis-spring-boot-starter</artifactId>
-		    <version>2.0.0</version>
 		</dependency>
 		
 		<!-- 解决报错:NoClassDefFoundError: javax/transaction/UserTransaction -->

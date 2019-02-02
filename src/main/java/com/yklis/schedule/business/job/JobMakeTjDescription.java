@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.yklis.schedule.util.Constants;
+import com.yklis.schedule.util.SpringUtil;
 
 /**
  * 命令模式
@@ -30,16 +28,12 @@ import com.yklis.schedule.util.Constants;
  */
 public class JobMakeTjDescription implements Command {
 
-    //配置容器起动时候加载log4j配置文件
-    //只要将log4j.properties放在classes下，tomcat启动的时候会自动加载log4j的配置信息，
-    //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
-    //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
-    //PropertyConfigurator.configure("log4jj.properties");
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    
     private int makeTjDescDays;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();    
-    private JdbcTemplate jdbcTemplate = webApplicationContext.getBean(JdbcTemplate.class);
+
+    private JdbcTemplate jdbcTemplate = SpringUtil.getBean(JdbcTemplate.class);
     
     //JAVA规定，如果类中没有定义任何构造函数，JVM自动为其生成一个默认的构造函数
     //故可不需要手动写下面的构造函数

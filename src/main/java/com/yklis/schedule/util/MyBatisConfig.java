@@ -1,4 +1,4 @@
-package com.yklis.schedule;
+package com.yklis.schedule.util;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -29,6 +29,7 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
 	
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean() {
+    	
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
 

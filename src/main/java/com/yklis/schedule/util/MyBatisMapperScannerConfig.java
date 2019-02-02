@@ -1,4 +1,4 @@
-package com.yklis.schedule;
+package com.yklis.schedule.util;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -12,6 +12,7 @@ public class MyBatisMapperScannerConfig {
 
     @Bean
     public MapperScannerConfigurer mapperScannerConfigurer() {
+    	
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         //获取之前注入的beanName为sqlSessionFactory的对象
         mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
