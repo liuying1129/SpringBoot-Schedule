@@ -2,6 +2,7 @@ package com.yklis.schedule.business.job;
 
 import com.yklis.schedule.business.job.Command;
 import com.yklis.schedule.misc.WebSocketNewValue;
+import com.yklis.schedule.util.SpringUtil;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +10,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 
 /**
  * 病人有新结果时，向送检医生发送消息
@@ -33,9 +32,7 @@ public class JobWebSocketNewValue implements Command {
 	@Override
 	public void execute(Map<String, Object> map) {
 		
-        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
-        
-        JdbcTemplate jdbcTemplate = webApplicationContext.getBean(JdbcTemplate.class);
+        JdbcTemplate jdbcTemplate = SpringUtil.getBean(JdbcTemplate.class);
                 
         if(0==unid) {
         	try{

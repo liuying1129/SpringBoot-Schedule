@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.yklis.dao.JobUploadFeeDao">
+<mapper namespace="com.yklis.schedule.dao.JobUploadFeeDao">
     
     <!-- 对于普通JAVA类型,parameterType、resultType使用的是mybatis的类型别名，大小写不敏感 -->
     <select id="selectWaitUploadFee" resultType="hashmap">		  
@@ -23,11 +23,11 @@
 		select XiuGaiBiaoShi from B_JIFEI where XINGCHEDANHAO=#{0} 
 	</select>
     
-	<update id="updateBJiFei" parameterType="com.yklis.entity.CrJiFeiEntity">         
+	<update id="updateBJiFei" parameterType="com.yklis.schedule.entity.CrJiFeiEntity">         
         update B_JIFEI set SHIXIAO=#{shiXiao},JIANSHU=#{jianShu},ZHONGLIANG=#{zhongLiang},TIJI=#{tiJi},TIJIAOSHIJIAN=getdate() where XINGCHEDANHAO=#{xingCheDanHao}
     </update> 
     
-    <insert id="insertBJiFei" parameterType="com.yklis.entity.CrJiFeiEntity">
+    <insert id="insertBJiFei" parameterType="com.yklis.schedule.entity.CrJiFeiEntity">
         insert into B_JIFEI 
 				( 
 				XINGCHEDANHAO

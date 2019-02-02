@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
-<mapper namespace="com.yklis.dao.JobDownloadBillDao">  
+<mapper namespace="com.yklis.schedule.dao.JobDownloadBillDao">  
     
-    <resultMap type="com.yklis.entity.CrShouHuoKeHuEntity" id="crShouHuoKeHuMap">        
+    <resultMap type="com.yklis.schedule.entity.CrShouHuoKeHuEntity" id="crShouHuoKeHuMap">        
         <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
 		<id property="shouHuoKeHuBianHao" column="shouHuoKeHuBianHao"/>
 		<result property="keHuMingCheng" column="keHuMingCheng"/>
 		<result property="xiuGaiBiaoShi" column="XiuGaiBiaoShi"/>
 	</resultMap>
     
-    <resultMap type="com.yklis.entity.CrShouHuoDiZhiEntity" id="crShouHuoDiZhiMap">        
+    <resultMap type="com.yklis.schedule.entity.CrShouHuoDiZhiEntity" id="crShouHuoDiZhiMap">        
         <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
 		<id property="diZhiBianHao" column="diZhiBianHao"/>
 		<result property="shouHuoKeHuBianHao" column="shouHuoKeHuBianHao"/>
@@ -19,7 +19,7 @@
 		<result property="xiuGaiBiaoShi" column="XiuGaiBiaoShi"/>
 	</resultMap>
     
-    <resultMap type="com.yklis.entity.CrHuoPinXinXiEntity" id="crHuoPinXinXiMap">        
+    <resultMap type="com.yklis.schedule.entity.CrHuoPinXinXiEntity" id="crHuoPinXinXiMap">        
         <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
 		<id property="huoPinBianHao" column="huoPinBianHao"/>
 		<result property="huoPinMingCheng" column="HuoPinMingCheng"/>
@@ -28,7 +28,7 @@
 		<result property="xiuGaiBiaoShi" column="XiuGaiBiaoShi"/>
 	</resultMap>
        
-    <resultMap id="crDingDanHuoPinMap" type="com.yklis.entity.CrDingDanHuoPinEntity">  
+    <resultMap id="crDingDanHuoPinMap" type="com.yklis.schedule.entity.CrDingDanHuoPinEntity">  
         <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
         <result property="dingDanBianHao" column="DingDanBianHao" />  
         <result property="huoPinBianHao" column="huoPinBianHao" />  
@@ -40,7 +40,7 @@
     </resultMap>
         
     <!--  注意：两张表中的主键id字段名要唯一，例如不能都写id，不然的话，在一对多查询的时候就会出现：级联出来的明细项只有一条记录 -->
-    <resultMap id="crBdingDanMap" type="com.yklis.entity.CrBdingDanEntity">
+    <resultMap id="crBdingDanMap" type="com.yklis.schedule.entity.CrBdingDanEntity">
         <!-- property必须与实体中的属性一样，column必须与select中字段名一样 -->
         <id property="dingDanBianHao" column="dingDanBianHao"/>
         <result property="yunShuMoShi" column="yunShuMoShi"/>
@@ -70,7 +70,7 @@
         <association property="crShouHuoDiZhiEntity" resultMap="crShouHuoDiZhiMap" />
         
         <!-- 一对多 -->
-        <collection property="crDingDanHuoPinEntityList" ofType="com.yklis.entity.CrDingDanHuoPinEntity" resultMap="crDingDanHuoPinMap"/>
+        <collection property="crDingDanHuoPinEntityList" ofType="com.yklis.schedule.entity.CrDingDanHuoPinEntity" resultMap="crDingDanHuoPinMap"/>
     </resultMap>
     	
     <!-- 注意到这个SQL，要确保所有的别名都是唯一且无歧义的 -->
@@ -91,7 +91,7 @@
 	
     <!-- 插入后，自动将自增长值赋值给参数对象WaitSchedEntity的属性unid。因此，可通过WaitSchedEntity对应的getter方法获取！ -->
     <!--microsoft自带的sql server 2000的JDBC驱动不支持 useGeneratedKeys="true" keyProperty="id" -->
-    <insert id="insertWaitSched" parameterType="com.yklis.entity.WaitSchedEntity" useGeneratedKeys="true" keyProperty="unid">
+    <insert id="insertWaitSched" parameterType="com.yklis.schedule.entity.WaitSchedEntity" useGeneratedKeys="true" keyProperty="unid">
 		insert into Wait_Sched 
 		( 
 		  SC_COMPANY

@@ -17,9 +17,6 @@ import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.matchers.GroupMatcher;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.yklis.schedule.dao.CommCodeDao;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.entity.TaskOperateTypeEntity;
@@ -28,6 +25,7 @@ import com.yklis.schedule.service.impl.DeleteTaskObserverServiceImpl;
 import com.yklis.schedule.service.impl.TaskSubjectServiceImpl;
 import com.yklis.schedule.service.impl.UpdateTaskObserverServiceImpl;
 import com.yklis.schedule.util.Constants;
+import com.yklis.schedule.util.SpringUtil;
 
 /**
  * 观察者模式,应用类
@@ -48,8 +46,7 @@ public class JobRefreshTask implements Job {
     //PropertyConfigurator.configure("log4jj.properties");
     private Logger logger = Logger.getLogger(this.getClass());
 	
-	private WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();		
-	private CommCodeDao commCodeDao = webApplicationContext.getBean(CommCodeDao.class);			
+	private CommCodeDao commCodeDao = SpringUtil.getBean(CommCodeDao.class);
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -105,8 +102,8 @@ public class JobRefreshTask implements Job {
 			    }
 			}
 		}
-		//查询调度器中所有的Job stop
-				
+		//查询调度器中所有的Job stop				
+
 		//查询数据库配置的所有Job start
 		CommCodeEntity commCodeEntity = new CommCodeEntity();
 		commCodeEntity.setTypeName("定时任务");

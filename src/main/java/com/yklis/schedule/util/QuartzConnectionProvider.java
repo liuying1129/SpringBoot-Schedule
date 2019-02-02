@@ -1,8 +1,12 @@
 package com.yklis.schedule.util;
 
 import java.beans.PropertyVetoException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
+
 import org.quartz.SchedulerException;
 import org.quartz.utils.ConnectionProvider;
 
@@ -43,7 +47,7 @@ public class QuartzConnectionProvider implements ConnectionProvider {
 	public void initialize() throws SQLException {
 		
 		//资源文件在classpath时用该方法
-		//InputStream in = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties");
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream("jdbc.properties");
 				
 		//获取项目所在的盘符//在项目包之外配置是为了部署、升级更方便
 		/*String ss1 = this.getClass().getResource("").getFile();///D:/Tools/apache-tomcat-8.5.4/webapps/YkSchedule/WEB-INF/classes/com/yklis/util/		
@@ -56,24 +60,24 @@ public class QuartzConnectionProvider implements ConnectionProvider {
 			in = new FileInputStream(ss1+":/ykschedule-cfg/jdbc.properties");
 		} catch (FileNotFoundException e) {
 			logger.error("new FileInputStream报错:"+e.toString());
-		}
+		}//*/
 				
 		Properties props = new Properties();
 		try {
 			props.load(in);
 		} catch (IOException e) {
-			logger.error("Properties加载jdbc.properties报错:"+e.toString());
+			//logger.error("Properties加载jdbc.properties报错:"+e.toString());
 		}
         String driver = props.getProperty("jdbc.driverClass");
         String url = props.getProperty("jdbc.jdbcUrl");
         String user = props.getProperty("jdbc.user");
         String password = props.getProperty("jdbc.password");
-        //*/
+        
 	    
-        String driver = CustomPropertyConfigurer.getProperty("jdbc.driverClass");
+        /*String driver = CustomPropertyConfigurer.getProperty("jdbc.driverClass");
         String url = CustomPropertyConfigurer.getProperty("jdbc.jdbcUrl");
         String user = CustomPropertyConfigurer.getProperty("jdbc.user");
-        String password = CustomPropertyConfigurer.getProperty("jdbc.password");
+        String password = CustomPropertyConfigurer.getProperty("jdbc.password");*/
         
         //logger.info("Quartz jdbc.driverClass:"+driver);
         //logger.info("Quartz jdbc.jdbcUrl:"+url);

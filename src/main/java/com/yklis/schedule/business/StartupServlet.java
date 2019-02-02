@@ -3,6 +3,7 @@ package com.yklis.schedule.business;
 import java.io.IOException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +20,14 @@ import com.yklis.schedule.util.GroupOfJobListener;
 import com.yklis.schedule.util.MySingleton;
 
 /**
+ * @WebServlet(name = "firstServlet", urlPatterns = "/firstServlet")
+ * name属性可选，而且属性值是随意的,本Servlet不处理外部请求,故无需属性urlPatterns
+ * 
+   * 每个Servlet对象在Tomcat容器中只有一个实例,即单例模式
+ * 
  * Servlet implementation class StartupServlet
  */
+@WebServlet(loadOnStartup = 1)
 public class StartupServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;

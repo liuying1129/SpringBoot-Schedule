@@ -50,7 +50,8 @@ public class HomeController {
 		Scheduler scheduler = mySingleton.getScheduler();
 		if(null == scheduler){
 			logger.warn("scheduler为空");
-	        return new ModelAndView("index", null);
+	        //return new ModelAndView("index", null);//to do
+			return null;
 		}
 		
 		ModelAndView mv = new ModelAndView();
@@ -75,7 +76,8 @@ public class HomeController {
 						triggers = scheduler.getTriggersOfJob(jobKey);
 					} catch (SchedulerException e) {
 						logger.error("getTriggersOfJob报错:"+e.toString());
-				        return new ModelAndView("index", null);
+				        //return new ModelAndView("index", null);//to do
+						return null;
 					}
 					if(null == triggers){
 						logger.info("getTriggersOfJob为null");
