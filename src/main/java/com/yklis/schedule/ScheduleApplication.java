@@ -2,8 +2,9 @@ package com.yklis.schedule;
 
 import java.beans.PropertyVetoException;
 
-import org.apache.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -14,8 +15,14 @@ import org.springframework.context.annotation.Primary;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+ * 右键启动
+ * 即右键入口main函数所在的文件就能启动整个项目
+ * @author liuyi
+ *
+ */
 @SpringBootApplication
-//配置扫描器,扫描指定包中的所有接口，然后创建各自接口的动态代理类
+//扫描指定包中的Mybatis接口，然后创建各自接口的动态代理类
 @MapperScan(value = {"com.yklis.schedule.dao"})
 //扫描本目录以及子目录的WebServlet注解
 @ServletComponentScan
@@ -26,7 +33,8 @@ public class ScheduleApplication {
     //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
     //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
     //PropertyConfigurator.configure("log4jj.properties");
-    private final Logger logger = Logger.getLogger(this.getClass());
+    //private final Logger logger = Logger.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //@Value的作用是将我们配置文件的属性读出来
     @Value("${jdbc.driverClass}")

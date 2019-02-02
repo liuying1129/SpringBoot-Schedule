@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DbUtil {
 	
-	private static Logger logger = Logger.getLogger(DbUtil.class);
+	private static Logger logger = LoggerFactory.getLogger(DbUtil.class);
 
 	private static ComboPooledDataSource cpds=null;  
     static{  

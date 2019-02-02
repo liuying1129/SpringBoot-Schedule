@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
@@ -17,6 +16,9 @@ import org.quartz.JobKey;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.yklis.schedule.dao.CommCodeDao;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.entity.TaskOperateTypeEntity;
@@ -44,7 +46,7 @@ public class JobRefreshTask implements Job {
     //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
     //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
     //PropertyConfigurator.configure("log4jj.properties");
-    private Logger logger = Logger.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private CommCodeDao commCodeDao = SpringUtil.getBean(CommCodeDao.class);
 

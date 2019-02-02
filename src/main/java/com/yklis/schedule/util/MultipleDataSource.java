@@ -4,14 +4,15 @@ import java.beans.PropertyVetoException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class MultipleDataSource extends AbstractRoutingDataSource {
 	
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//Java 7之前只能这样写：
 	//private Map<Object, Object> targetDataSources = new HashMap<Object, Object>()

@@ -21,11 +21,11 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.apache.log4j.Logger;
-
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.util.Constants;
 import com.yklis.schedule.util.MySingleton;
@@ -39,7 +39,7 @@ public class HomeController {
     //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
     //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
     //PropertyConfigurator.configure("log4jj.properties");
-    private Logger logger = Logger.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping("index")
     public ModelAndView handleIndexPageRequest(HttpServletRequest request) {
@@ -232,7 +232,7 @@ public class HomeController {
     
     static class RunJobMapComparator implements Comparator<Map<String, Object>> {
     	 
-    	private Logger logger = Logger.getLogger(this.getClass());
+    	private Logger logger = LoggerFactory.getLogger(this.getClass());
     	
         @Override
         public int compare(Map<String, Object> o1, Map<String, Object> o2) {
@@ -262,7 +262,7 @@ public class HomeController {
     
     static class AllJobMapComparator implements Comparator<Map<String, Object>> {
    	 
-    	private Logger logger = Logger.getLogger(this.getClass());
+    	private Logger logger = LoggerFactory.getLogger(this.getClass());
     	
         @Override
         public int compare(Map<String, Object> o1, Map<String, Object> o2) {

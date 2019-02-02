@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.yklis.schedule.util.Constants;
 import com.yklis.schedule.util.GroupOfJobListener;
@@ -39,7 +40,7 @@ public class StartupServlet extends HttpServlet {
     //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
     //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
     //PropertyConfigurator.configure("log4jj.properties");
-    private final Logger logger = Logger.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
            
 	/**
 	 * init仅在 Servlet创建时被调用

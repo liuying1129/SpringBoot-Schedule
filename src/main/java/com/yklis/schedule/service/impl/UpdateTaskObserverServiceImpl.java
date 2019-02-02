@@ -1,13 +1,15 @@
 package com.yklis.schedule.service.impl;
 
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.entity.TaskOperateTypeEntity;
 import com.yklis.schedule.service.TaskObserverService;
@@ -30,7 +32,7 @@ public class UpdateTaskObserverServiceImpl implements TaskObserverService {
     //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
     //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
     //PropertyConfigurator.configure("log4jj.properties");
-    private Logger logger = Logger.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     
 	public UpdateTaskObserverServiceImpl(TaskSubjectService taskSubjectService){
 		

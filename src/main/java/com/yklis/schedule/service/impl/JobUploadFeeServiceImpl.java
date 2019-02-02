@@ -3,7 +3,8 @@ package com.yklis.schedule.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class JobUploadFeeServiceImpl implements JobUploadFeeService {
     //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
     //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
     //PropertyConfigurator.configure("log4jj.properties");
-    Logger logger = Logger.getLogger(this.getClass());
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @Autowired
     JobUploadFeeDao jobUploadFeeDao;
