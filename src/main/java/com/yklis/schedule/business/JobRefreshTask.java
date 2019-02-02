@@ -110,7 +110,13 @@ public class JobRefreshTask implements Job {
 		CommCodeEntity commCodeEntity = new CommCodeEntity();
 		commCodeEntity.setTypeName("定时任务");
 		commCodeEntity.setReserve6(1);
-		List<CommCodeEntity> dbJobList = commCodeDao.selectCommCode(commCodeEntity);
+		List<CommCodeEntity> dbJobList = null;
+		try {
+		dbJobList = commCodeDao.selectCommCode(commCodeEntity);
+		logger.info("Mybatis commCodeDao查询成功111111111");
+	} catch (Exception e) {
+		logger.error("Mybatis commCodeDao查询出错22222222"+e.toString());					
+	}			
 		//查询数据库配置的所有Job stop
 				
 		
