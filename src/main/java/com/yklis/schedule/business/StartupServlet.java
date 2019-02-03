@@ -24,7 +24,7 @@ import com.yklis.schedule.util.MySingleton;
  * @WebServlet(name = "firstServlet", urlPatterns = "/firstServlet")
  * name属性可选，而且属性值是随意的,本Servlet不处理外部请求,故无需属性urlPatterns
  * 
-   * 每个Servlet对象在Tomcat容器中只有一个实例,即单例模式
+ * 每个Servlet对象在Tomcat容器中只有一个实例,即单例模式
  * 
  * Servlet implementation class StartupServlet
  */
@@ -35,11 +35,6 @@ public class StartupServlet extends HttpServlet {
 	
     //private Scheduler scheduler = null;//使用单例类MySingleton定义该变量
     
-    //配置容器起动时候加载log4j配置文件
-    //只要将log4j.properties放在classes下，tomcat启动的时候会自动加载log4j的配置信息，
-    //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
-    //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
-    //PropertyConfigurator.configure("log4jj.properties");
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
            
 	/**

@@ -17,13 +17,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.yklis.schedule.util.Constants;
+import com.yklis.schedule.util.SpringUtils;
 
 /**
  * 命令模式
@@ -35,11 +33,6 @@ import com.yklis.schedule.util.Constants;
  */
 public class JobSPHGetSendSheetList implements Command {
 
-    //配置容器起动时候加载log4j配置文件
-    //只要将log4j.properties放在classes下，tomcat启动的时候会自动加载log4j的配置信息，
-    //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
-    //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
-    //PropertyConfigurator.configure("log4jj.properties");
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//JAVA规定，如果类中没有定义任何构造函数，JVM自动为其生成一个默认的构造函数
@@ -167,9 +160,7 @@ public class JobSPHGetSendSheetList implements Command {
                     	
                     	//{"BILLNO":"ZP17120601205","MID":26163,"S_ADDRESS":"惠州市鹅岭北路41号（静配中心）","S_ROADLINE":"粤东","PACK_TYPE":"普通","S_TEL":"0752-2288567","R_NAME":"上药控股广东有限公司","S_NAME":"惠州市中心人民医院","S_CONTACT":"林岭海","R_ADDRESS":"广州市黄埔区中山大道东138号","SEND_NUM":1,"OUT_DATE":"2017-12-07 15:18"}
                         map1 = jsarrData.getJSONObject(i);                                           	
-                    	
-                        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
-                        
+                    	                        
                     	StringBuilder sb2 = new StringBuilder();
                     	sb2.append("select count(*) as RecNum from Wait_Sched where SC_COMPANY='");
                     	sb2.append(Constants.SPH_SC_COMPANY);
@@ -178,7 +169,7 @@ public class JobSPHGetSendSheetList implements Command {
                     	sb2.append("'");
                     	
                     	Integer ii = 0;
-                        JdbcTemplate jdbcTemplate2 = webApplicationContext.getBean(JdbcTemplate.class);
+                        JdbcTemplate jdbcTemplate2 = SpringUtils.getBean(JdbcTemplate.class);
                         try{
                             ii = jdbcTemplate2.queryForObject(sb2.toString(), Integer.class);
                         }catch(Exception e){
@@ -226,7 +217,7 @@ public class JobSPHGetSendSheetList implements Command {
                             sb1.append(map1.get("SEND_NUM"));
                             sb1.append(")");
                         	
-                            JdbcTemplate jdbcTemplate = webApplicationContext.getBean(JdbcTemplate.class);
+                            JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
                             try{                        	
                             	jdbcTemplate.execute(sb1.toString());
                             	

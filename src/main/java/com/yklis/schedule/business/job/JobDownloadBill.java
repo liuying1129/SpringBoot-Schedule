@@ -6,20 +6,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.service.JobDownloadBillService;
 import com.yklis.schedule.util.CustomerContextHolder;
+import com.yklis.schedule.util.SpringUtils;
 
 public class JobDownloadBill {
 
-    //配置容器起动时候加载log4j配置文件
-    //只要将log4j.properties放在classes下，tomcat启动的时候会自动加载log4j的配置信息，
-    //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
-    //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
-    //PropertyConfigurator.configure("log4jj.properties");
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//JAVA规定，如果类中没有定义任何构造函数，JVM自动为其生成一个默认的构造函数
@@ -29,9 +22,7 @@ public class JobDownloadBill {
 	
 	public void execute(Map<String,Object> map) {	     			
 				
-		//当前类JobDownloadBill并不是Spring管理的Bean,故只能手动注入JobDownloadBillService
-        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
-        JobDownloadBillService jobDownloadBillService= webApplicationContext.getBean(JobDownloadBillService.class);
+        JobDownloadBillService jobDownloadBillService= SpringUtils.getBean(JobDownloadBillService.class);
         
         //切换数据源的变量准备工作start
 		String selfClassName = this.getClass().getName();		
@@ -49,7 +40,7 @@ public class JobDownloadBill {
 		try{			
 			if(!customerTypeMap.isEmpty()) CustomerContextHolder.setCustomerType(customerTypeMap);						
 				
-	        JdbcTemplate jdbcTemplate = webApplicationContext.getBean(JdbcTemplate.class);
+	        JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
 			final String strQuery = "select title from Employees where employeeid=1";
 			String northwind = jdbcTemplate.queryForObject(strQuery,String.class);
 			logger.info("selectNorthwindString值:" + northwind);
