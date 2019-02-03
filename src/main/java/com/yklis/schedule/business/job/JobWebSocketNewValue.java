@@ -2,7 +2,7 @@ package com.yklis.schedule.business.job;
 
 import com.yklis.schedule.business.job.Command;
 import com.yklis.schedule.misc.WebSocketNewValue;
-import com.yklis.schedule.util.SpringUtil;
+import com.yklis.schedule.util.SpringUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -33,7 +33,7 @@ public class JobWebSocketNewValue implements Command {
 	@Override
 	public void execute(Map<String, Object> map) {
 		
-        JdbcTemplate jdbcTemplate = SpringUtil.getBean(JdbcTemplate.class);
+        JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
                 
         if(0==unid) {
         	try{

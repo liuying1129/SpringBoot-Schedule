@@ -11,7 +11,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.yklis.schedule.util.Constants;
-import com.yklis.schedule.util.SpringUtil;
+import com.yklis.schedule.util.SpringUtils;
 
 /**
  * 命令模式
@@ -33,7 +33,7 @@ public class JobMakeTjDescription implements Command {
     private int makeTjDescDays;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    private JdbcTemplate jdbcTemplate = SpringUtil.getBean(JdbcTemplate.class);
+    private JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
     
     //JAVA规定，如果类中没有定义任何构造函数，JVM自动为其生成一个默认的构造函数
     //故可不需要手动写下面的构造函数

@@ -7,6 +7,7 @@ import org.quartz.SchedulerException;
 import org.quartz.utils.ConnectionProvider;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.yklis.schedule.config.MasterDataSource;
 
 /**
  * 自定义类，用于quartz集群时获取连接DB的数据源

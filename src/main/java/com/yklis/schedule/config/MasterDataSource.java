@@ -1,4 +1,4 @@
-package com.yklis.schedule.util;
+package com.yklis.schedule.config;
 
 import java.beans.PropertyVetoException;
 import java.util.HashMap;
@@ -6,10 +6,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +32,7 @@ public class MasterDataSource {
 	//final
 	//如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改
 	//如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象.但是对象本身是可以被修改的
-    public static final Map<String, String> ctxPropertiesMap = new HashMap<>();    
+    public static final Map<String, String> ctxPropertiesMap = new HashMap<>();
 
     //@Value的作用是将我们配置文件的属性读出来
     @Value("${jdbc.driverClass}")
@@ -57,13 +55,11 @@ public class MasterDataSource {
     @Value("${jdbc.pool.checkoutTimeout}")
     private String checkoutTimeout;
         
-    //指定当前对象作为bean
-    @Bean(name = "dataSource_master")
-    //指定dataSource_master来DI
-    @Qualifier(value = "dataSource_master")
-    //当前数据库连接池作为默认数据库连接池
-    //ComboPooledDataSource表示C3P0连接池
-    @Primary
+    /**
+     * ComboPooledDataSource表示C3P0连接池
+     * @return
+     */
+    @Bean
     public ComboPooledDataSource createDataSource() {
     	
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();

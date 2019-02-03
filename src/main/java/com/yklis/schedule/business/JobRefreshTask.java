@@ -27,7 +27,7 @@ import com.yklis.schedule.service.impl.DeleteTaskObserverServiceImpl;
 import com.yklis.schedule.service.impl.TaskSubjectServiceImpl;
 import com.yklis.schedule.service.impl.UpdateTaskObserverServiceImpl;
 import com.yklis.schedule.util.Constants;
-import com.yklis.schedule.util.SpringUtil;
+import com.yklis.schedule.util.SpringUtils;
 
 /**
  * 观察者模式,应用类
@@ -48,7 +48,7 @@ public class JobRefreshTask implements Job {
     //PropertyConfigurator.configure("log4jj.properties");
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	private CommCodeDao commCodeDao = SpringUtil.getBean(CommCodeDao.class);
+	private CommCodeDao commCodeDao = SpringUtils.getBean(CommCodeDao.class);
 
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {

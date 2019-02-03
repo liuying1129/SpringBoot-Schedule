@@ -6,7 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import com.yklis.schedule.util.SpringUtil;
+import com.yklis.schedule.util.SpringUtils;
 
 /**
  * 命令模式
@@ -31,7 +31,7 @@ public class JobYXZYWriteBarcode implements Command {
     @Override
     public void execute(Map<String,Object> map) {
         
-        JdbcTemplate jdbcTemplate = SpringUtil.getBean(JdbcTemplate.class);
+        JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
         
         List<Map<String, Object>> list = null;
         try{
