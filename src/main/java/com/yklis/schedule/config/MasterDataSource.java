@@ -24,7 +24,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
  *
  */
 @Component//或@Configuration
-@PropertySource(value = { "classpath:jdbc.properties"})
+@PropertySource(value = {"file:/ykschedule-cfg/jdbc.properties"})
 public class MasterDataSource {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -69,10 +69,10 @@ public class MasterDataSource {
 			dataSource.setUser(user);
 			dataSource.setPassword(password);
 									
-			ctxPropertiesMap.put("driverClass", driverClass);
-			ctxPropertiesMap.put("jdbcUrl", jdbcUrl);
-			ctxPropertiesMap.put("user", user);
-			ctxPropertiesMap.put("password", password);
+			ctxPropertiesMap.put("jdbc.driverClass", driverClass);
+			ctxPropertiesMap.put("jdbc.jdbcUrl", jdbcUrl);
+			ctxPropertiesMap.put("jdbc.user", user);
+			ctxPropertiesMap.put("jdbc.password", password);
 
 			//连接池在无空闲连接可用时一次性创建的新数据库连接数,default : 3
 			//dataSource.setAcquireIncrement(Integer.parseInt(customerType.get("acquireIncrement").toString()));
@@ -119,5 +119,15 @@ public class MasterDataSource {
 		}
 		
 		return dataSource;
+    }
+    
+    /**
+     * Java普通类调用该方法获取配置文件的值
+     * @param key
+     * @return
+     */
+    protected static String getProperty(String key){
+        
+        return ctxPropertiesMap.get(key);
     }
 }

@@ -1,4 +1,4 @@
-package com.yklis.schedule.util;
+package com.yklis.schedule.config;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
@@ -7,7 +7,6 @@ import org.quartz.SchedulerException;
 import org.quartz.utils.ConnectionProvider;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.yklis.schedule.config.MasterDataSource;
 
 /**
  * 自定义类，用于quartz集群时获取连接DB的数据源
@@ -57,24 +56,24 @@ public class QuartzConnectionProvider implements ConnectionProvider {
 			in = new FileInputStream(ss1+":/ykschedule-cfg/jdbc.properties");
 		} catch (FileNotFoundException e) {
 			logger.error("new FileInputStream报错:"+e.toString());
-		}//*/
+		}
 				
-		/*Properties props = new Properties();
+		Properties props = new Properties();
 		try {
 			props.load(in);
 		} catch (IOException e) {
-			//logger.error("Properties加载jdbc.properties报错:"+e.toString());
+			logger.error("Properties加载jdbc.properties报错:"+e.toString());
 		}
         String driver = props.getProperty("jdbc.driverClass");
         String url = props.getProperty("jdbc.jdbcUrl");
         String user = props.getProperty("jdbc.user");
-        String password = props.getProperty("jdbc.password");*/
-        
+        String password = props.getProperty("jdbc.password");
+        //*/
 	    
-        String driver = MasterDataSource.ctxPropertiesMap.get("driverClass");
-        String url = MasterDataSource.ctxPropertiesMap.get("jdbcUrl");
-        String user = MasterDataSource.ctxPropertiesMap.get("user");
-        String password = MasterDataSource.ctxPropertiesMap.get("password");
+        String driver = MasterDataSource.getProperty("jdbc.driverClass");
+        String url = MasterDataSource.getProperty("jdbc.jdbcUrl");
+        String user = MasterDataSource.getProperty("jdbc.user");
+        String password = MasterDataSource.getProperty("jdbc.password");
         
         //logger.info("Quartz jdbc.driverClass:"+driver);
         //logger.info("Quartz jdbc.jdbcUrl:"+url);

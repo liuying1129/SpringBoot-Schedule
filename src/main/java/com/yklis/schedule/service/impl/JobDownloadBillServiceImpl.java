@@ -13,7 +13,7 @@ import com.yklis.schedule.entity.CrDingDanHuoPinEntity;
 import com.yklis.schedule.entity.WaitSchedEntity;
 import com.yklis.schedule.service.JobDownloadBillService;
 
-@Service
+//@Service
 public class JobDownloadBillServiceImpl implements JobDownloadBillService {
 	
 	// 配置容器起动时候加载log4j配置文件

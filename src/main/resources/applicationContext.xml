@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:jee="http://www.springframework.org/schema/jee"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/jee  
+        http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 统一数据库 -->
+    <bean id="multipleDataSource" class="com.yklis.schedule.util.MultipleDataSource">
+        <!-- 从未setCustomerType或clearCustomerType，使用defaultTargetDataSource -->
+        <property name="defaultTargetDataSource" ref="masterDataSource"/>
+        <property name="targetDataSources">
+            <map>     
+                <!-- 注意这里的value是和上面的DataSource的id对应，key要和类CustomerContextHolder中的常量对应 -->
+                <!-- <entry value-ref="dataSource_1" key="dataSource_1"/>
+                <entry value-ref="dataSource_2" key="dataSource_2"/> -->
+            </map>   
+        </property>
+    </bean>
+    				
+</beans>

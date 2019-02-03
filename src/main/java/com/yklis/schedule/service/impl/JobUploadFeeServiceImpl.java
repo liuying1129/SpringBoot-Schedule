@@ -12,7 +12,7 @@ import com.yklis.schedule.dao.JobUploadFeeDao;
 import com.yklis.schedule.entity.CrJiFeiEntity;
 import com.yklis.schedule.service.JobUploadFeeService;
 
-@Service
+//@Service
 public class JobUploadFeeServiceImpl implements JobUploadFeeService {
 	
     //配置容器起动时候加载log4j配置文件
