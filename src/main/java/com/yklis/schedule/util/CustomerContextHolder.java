@@ -3,9 +3,6 @@ package com.yklis.schedule.util;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.yklis.schedule.dao.CommCodeDao;
 import com.yklis.schedule.entity.CommCodeEntity;
 
@@ -41,8 +38,7 @@ public abstract class CustomerContextHolder {
     //自定义的两个切换用函数
 	public static int getJdbcUnidFromJobClass(String jobClassName){
 		
-		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();		
-		CommCodeDao commCodeDao = context.getBean(CommCodeDao.class);
+		CommCodeDao commCodeDao = SpringUtils.getBean(CommCodeDao.class);
 		
 		CommCodeEntity commCodeEntity = new CommCodeEntity();
 		commCodeEntity.setTypeName("定时任务");
@@ -59,8 +55,7 @@ public abstract class CustomerContextHolder {
 	
 	public static CommCodeEntity getConnectionInfo(int jdbcUnid){
 		
-		WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();		
-		CommCodeDao commCodeDao = context.getBean(CommCodeDao.class);
+		CommCodeDao commCodeDao = SpringUtils.getBean(CommCodeDao.class);
 		
 		CommCodeEntity commCodeEntity = new CommCodeEntity();
 		commCodeEntity.setTypeName("JDBC连接字符串");

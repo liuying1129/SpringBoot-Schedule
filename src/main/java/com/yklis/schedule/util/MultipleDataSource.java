@@ -10,6 +10,12 @@ import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+ * 数据源路由
+ * 
+ * @author liuyi
+ *
+ */
 public class MultipleDataSource extends AbstractRoutingDataSource {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());

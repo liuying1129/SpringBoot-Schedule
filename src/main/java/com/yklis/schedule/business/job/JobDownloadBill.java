@@ -11,7 +11,13 @@ import com.yklis.schedule.service.JobDownloadBillService;
 import com.yklis.schedule.util.CustomerContextHolder;
 import com.yklis.schedule.util.SpringUtils;
 
-public class JobDownloadBill {
+/**
+ * 获取华润送货单
+ * 
+ * @author liuyi
+ *
+ */
+public class JobDownloadBill implements Command {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -20,12 +26,17 @@ public class JobDownloadBill {
 	//public JobDownloadBill(){		
 	//}
 	
+    @Override
 	public void execute(Map<String,Object> map) {	     			
 				
-        JobDownloadBillService jobDownloadBillService= SpringUtils.getBean(JobDownloadBillService.class);
+        //JobDownloadBillService jobDownloadBillService= SpringUtils.getBean(JobDownloadBillService.class);
         
+        JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
+        String ss1 = jdbcTemplate.queryForObject("select top 1 unid from chk_con", String.class);
+        logger.info("unid:"+ss1);
+
         //切换数据源的变量准备工作start
-		String selfClassName = this.getClass().getName();		
+		String selfClassName = this.getClass().getName();
 		int jdbcUnid = CustomerContextHolder.getJdbcUnidFromJobClass(selfClassName);				
 		CommCodeEntity commCodeEntity = CustomerContextHolder.getConnectionInfo(jdbcUnid);
 		Map<String,Object> customerTypeMap = new HashMap<String,Object>();
@@ -40,17 +51,21 @@ public class JobDownloadBill {
 		try{			
 			if(!customerTypeMap.isEmpty()) CustomerContextHolder.setCustomerType(customerTypeMap);						
 				
-	        JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
-			final String strQuery = "select title from Employees where employeeid=1";
-			String northwind = jdbcTemplate.queryForObject(strQuery,String.class);
+	        JdbcTemplate jdbcTemplate2 = SpringUtils.getBean(JdbcTemplate.class);
+			final String strQuery = "select TOP 1 RECEIVEHEAD from INF_INPT_PKT_DTL";
+			String northwind = jdbcTemplate2.queryForObject(strQuery,String.class);
 			logger.info("selectNorthwindString值:" + northwind);
 		}catch(Exception e){
 			logger.error("切换数据源，执行出错:" + e.toString());
 		}finally{
 			CustomerContextHolder.clearCustomerType();
-		}	
-		
-		jobDownloadBillService.downloadBill();
+		}
+				
+        JdbcTemplate jdbcTemplate3 = SpringUtils.getBean(JdbcTemplate.class);
+        String ss3 = jdbcTemplate3.queryForObject("select top 1 unid from chk_con", String.class);
+        logger.info("unid:"+ss3);
+
+		//jobDownloadBillService.downloadBill();
 
 	}
 }

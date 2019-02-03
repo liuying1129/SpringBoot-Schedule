@@ -11,6 +11,12 @@ import com.yklis.schedule.service.JobUploadFeeService;
 import com.yklis.schedule.util.CustomerContextHolder;
 import com.yklis.schedule.util.SpringUtils;
 
+/**
+ * 送货单运费费用回填华润
+ * 
+ * @author liuyi
+ *
+ */
 public class JobUploadFee {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
