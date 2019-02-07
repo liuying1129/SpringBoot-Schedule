@@ -6,9 +6,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.yklis.schedule.config.CustomerContextHolder;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.service.JobUploadFeeService;
-import com.yklis.schedule.util.CustomerContextHolder;
 import com.yklis.schedule.util.SpringUtils;
 
 /**

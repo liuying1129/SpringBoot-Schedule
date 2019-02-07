@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 工具类:获取Spring Boot管理的bean
  * 一般在非Spring Boot管理的类中使用
  * 
- * 对于工具类，阿里开发手册规定，包名如果使用util不能带s，工具类名为XxxUtils
+ * 阿里开发手册规定，工具类的包名如果使用util不能带s，工具类名为XxxUtils
  * 
  * @author liuyi
  *

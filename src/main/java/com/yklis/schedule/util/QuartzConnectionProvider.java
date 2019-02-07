@@ -1,4 +1,4 @@
-package com.yklis.schedule.config;
+package com.yklis.schedule.util;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
@@ -7,6 +7,7 @@ import org.quartz.SchedulerException;
 import org.quartz.utils.ConnectionProvider;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.yklis.schedule.config.DynamicDataSourceRegister;
 
 /**
  * 自定义类，用于quartz集群时获取连接DB的数据源
@@ -20,14 +21,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
  */
 public class QuartzConnectionProvider implements ConnectionProvider {
 		
-	private ComboPooledDataSource datasource;
-	
-    //配置容器起动时候加载log4j配置文件
-    //只要将log4j.properties放在classes下，tomcat启动的时候会自动加载log4j的配置信息，
-    //在程式代码不再需要使用PropertyConfigurator.configure("log4j.properties")来加载，
-    //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
-    //PropertyConfigurator.configure("log4jj.properties");
-    //private Logger logger = Logger.getLogger(this.getClass());
+	private ComboPooledDataSource datasource;	
 	
 	@Override
 	public Connection getConnection() throws SQLException {
@@ -70,10 +64,10 @@ public class QuartzConnectionProvider implements ConnectionProvider {
         String password = props.getProperty("jdbc.password");
         //*/
 	    
-        String driver = MasterDataSource.getProperty("jdbc.driverClass");
-        String url = MasterDataSource.getProperty("jdbc.jdbcUrl");
-        String user = MasterDataSource.getProperty("jdbc.user");
-        String password = MasterDataSource.getProperty("jdbc.password");
+        String driver = DynamicDataSourceRegister.getProperty("jdbc.driverClass");
+        String url = DynamicDataSourceRegister.getProperty("jdbc.jdbcUrl");
+        String user = DynamicDataSourceRegister.getProperty("jdbc.user");
+        String password = DynamicDataSourceRegister.getProperty("jdbc.password");
         
         //logger.info("Quartz jdbc.driverClass:"+driver);
         //logger.info("Quartz jdbc.jdbcUrl:"+url);

@@ -4,7 +4,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.yklis.schedule.util.MultipleDataSource;
 
 /**
  *  <!-- 配置sqlSessionFactory -->
@@ -12,13 +11,15 @@ import com.yklis.schedule.util.MultipleDataSource;
  *		<property name="dataSource" ref="multipleDataSource" />
  *	</bean>
  *
+ * 意味着,MyBatis执行SQL前先执行数据源路由类MultipleDataSource
+ *
  * @author liuyi
  *
  */
 @Configuration
 public class MyBatisConfig {
 	
-    @Bean(name = "sqlSessionFactory")
+    @Bean
     public SqlSessionFactory sqlSessionFactory(MultipleDataSource multipleDataSource) throws Exception {
     	
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();

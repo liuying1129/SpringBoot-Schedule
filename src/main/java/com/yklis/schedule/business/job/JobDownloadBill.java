@@ -7,10 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.yklis.schedule.config.TargetDataSource;
+import com.yklis.schedule.config.CustomerContextHolder;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.service.JobDownloadBillService;
-import com.yklis.schedule.util.CustomerContextHolder;
 import com.yklis.schedule.util.SpringUtils;
 
 /**
@@ -52,7 +51,7 @@ public class JobDownloadBill implements Command {
         //切换数据源的变量准备工作stop
 			
 		try{			
-			if(!customerTypeMap.isEmpty()) CustomerContextHolder.setCustomerType(customerTypeMap);						
+			CustomerContextHolder.setCustomerType(customerTypeMap);
 				
 	        JdbcTemplate jdbcTemplate2 = SpringUtils.getBean(JdbcTemplate.class);
 			final String strQuery = "select TOP 1 RECEIVEHEAD from INF_INPT_PKT_DTL";

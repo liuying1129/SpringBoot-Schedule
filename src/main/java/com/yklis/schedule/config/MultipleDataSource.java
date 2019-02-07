@@ -1,4 +1,4 @@
-package com.yklis.schedule.util;
+package com.yklis.schedule.config;
 
 import java.beans.PropertyVetoException;
 import java.util.HashMap;
@@ -22,13 +22,13 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
 	
 	//Java 7之前只能这样写：
 	//private Map<Object, Object> targetDataSources = new HashMap<Object, Object>()
-	//Java 7支持类型推断（type inference）,让编译器推断出合适的类
+	//Java 7支持类型推断（type inference）,让编译器推断出合适的类	                                  
 	private final Map<Object, Object> targetDataSources = new HashMap<>();
 	
     @Override
     protected Object determineCurrentLookupKey() {
     	
-    	/*Map<String, Object> customerTypeMap =  CustomerContextHolder.getCustomerType();
+    	Map<String, Object> customerTypeMap =  CustomerContextHolder.getCustomerType();
     	
     	//从未setCustomerType或clearCustomerType，customerTypeMap为null.
     	//会使用defaultTargetDataSource
@@ -44,9 +44,7 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
 		ComboPooledDataSource dataSource = createDataSource(customerTypeMap);
 		this.addTargetDataSource(dataSourceKey, dataSource);
     	
-    	return dataSourceKey;*/
-    	
-    	return CustomerContextHolder.getDataSourceType();
+    	return dataSourceKey;
     }
     
 	public void addTargetDataSource(String key, ComboPooledDataSource dataSource) {
