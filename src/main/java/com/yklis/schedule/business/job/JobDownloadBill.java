@@ -6,6 +6,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.yklis.schedule.config.TargetDataSource;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.service.JobDownloadBillService;
 import com.yklis.schedule.util.CustomerContextHolder;
@@ -26,8 +28,9 @@ public class JobDownloadBill implements Command {
 	//public JobDownloadBill(){		
 	//}
 	
+    //@TargetDataSource(name = "ds1")
     @Override
-	public void execute(Map<String,Object> map) {	     			
+	public void execute(Map<String,Object> map) {
 				
         //JobDownloadBillService jobDownloadBillService= SpringUtils.getBean(JobDownloadBillService.class);
         

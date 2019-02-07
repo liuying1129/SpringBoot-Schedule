@@ -44,7 +44,7 @@ public class JobUploadFee {
         //切换数据源的变量准备工作stop		
 		
 		try{
-			if(!customerTypeMap.isEmpty()) CustomerContextHolder.setCustomerType(customerTypeMap);				
+			//if(!customerTypeMap.isEmpty()) CustomerContextHolder.setCustomerType(customerTypeMap);				
 			
 	        JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
 			final String strQuery = "select au_fname from authors where au_id='172-32-1176'";
@@ -53,7 +53,7 @@ public class JobUploadFee {
 		}catch(Exception e){
 			logger.error("切换数据源，执行出错:" + e.toString());
 		}finally{
-			CustomerContextHolder.clearCustomerType();
+			//CustomerContextHolder.clearCustomerType();
 		}
 		        		
 		jobUploadFeeService.uploadFee();

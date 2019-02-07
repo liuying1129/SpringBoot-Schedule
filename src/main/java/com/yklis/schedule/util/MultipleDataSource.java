@@ -28,7 +28,7 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
     @Override
     protected Object determineCurrentLookupKey() {
     	
-    	Map<String, Object> customerTypeMap =  CustomerContextHolder.getCustomerType();
+    	/*Map<String, Object> customerTypeMap =  CustomerContextHolder.getCustomerType();
     	
     	//从未setCustomerType或clearCustomerType，customerTypeMap为null.
     	//会使用defaultTargetDataSource
@@ -44,7 +44,9 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
 		ComboPooledDataSource dataSource = createDataSource(customerTypeMap);
 		this.addTargetDataSource(dataSourceKey, dataSource);
     	
-    	return dataSourceKey;
+    	return dataSourceKey;*/
+    	
+    	return CustomerContextHolder.getDataSourceType();
     }
     
 	public void addTargetDataSource(String key, ComboPooledDataSource dataSource) {

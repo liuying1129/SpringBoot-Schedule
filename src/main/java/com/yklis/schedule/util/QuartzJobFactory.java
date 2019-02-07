@@ -100,7 +100,7 @@ public class QuartzJobFactory implements Job {
 	        //切换数据源的变量准备工作stop
 			
 			try{			
-				CustomerContextHolder.setCustomerType(customerTypeMap);
+				//CustomerContextHolder.setCustomerType(customerTypeMap);
 					
 		        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
 		        JdbcTemplate jdbcTemplate = webApplicationContext.getBean(JdbcTemplate.class);
@@ -119,7 +119,7 @@ public class QuartzJobFactory implements Job {
 				logger.error("切换数据源，执行出错:" + e.toString());
 				return;
 			}finally{
-				CustomerContextHolder.clearCustomerType();
+				//CustomerContextHolder.clearCustomerType();
 			}
 			
 			break;
