@@ -2,6 +2,7 @@ package com.yklis.schedule.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -17,8 +18,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * 
  */
 @Configuration
+@Order(5)
 public class JdbcConfig {
 
+	//任何标志了@Bean的方法，其返回值将作为一个Bean注册到Spring的IOC容器中
+	//方法名默认成为该bean定义的id
     @Bean
     public JdbcTemplate jdbcTemplate(MultipleDataSource multipleDataSource) throws Exception {
     	        

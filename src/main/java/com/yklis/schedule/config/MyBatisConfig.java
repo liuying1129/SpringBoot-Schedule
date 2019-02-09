@@ -19,6 +19,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MyBatisConfig {
 	
+	//任何标志了@Bean的方法，其返回值将作为一个Bean注册到Spring的IOC容器中
+	//方法名默认成为该bean定义的id
     @Bean
     public SqlSessionFactory sqlSessionFactory(MultipleDataSource multipleDataSource) throws Exception {
     	

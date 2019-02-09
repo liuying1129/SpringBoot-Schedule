@@ -21,7 +21,7 @@ import com.yklis.schedule.config.DynamicDataSourceRegister;
  */
 public class QuartzConnectionProvider implements ConnectionProvider {
 		
-	private ComboPooledDataSource datasource;	
+	private ComboPooledDataSource datasource;
 	
 	@Override
 	public Connection getConnection() throws SQLException {
@@ -64,10 +64,10 @@ public class QuartzConnectionProvider implements ConnectionProvider {
         String password = props.getProperty("jdbc.password");
         //*/
 	    
-        String driver = DynamicDataSourceRegister.getProperty("jdbc.driverClass");
-        String url = DynamicDataSourceRegister.getProperty("jdbc.jdbcUrl");
-        String user = DynamicDataSourceRegister.getProperty("jdbc.user");
-        String password = DynamicDataSourceRegister.getProperty("jdbc.password");
+        String driver = DynamicDataSourceRegister.ctxPropertiesMap.get("jdbc.driverClass");
+        String url = DynamicDataSourceRegister.ctxPropertiesMap.get("jdbc.jdbcUrl");
+        String user = DynamicDataSourceRegister.ctxPropertiesMap.get("jdbc.user");
+        String password = DynamicDataSourceRegister.ctxPropertiesMap.get("jdbc.password");
         
         //logger.info("Quartz jdbc.driverClass:"+driver);
         //logger.info("Quartz jdbc.jdbcUrl:"+url);

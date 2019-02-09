@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
+
 import com.yklis.schedule.config.DynamicDataSourceRegister;
 
 /**
@@ -14,6 +16,8 @@ import com.yklis.schedule.config.DynamicDataSourceRegister;
  *
  */
 @SpringBootApplication
+//不影响默认配置文件的读取
+@PropertySource(value = {"file:/ykschedule-cfg/jdbc.properties"})
 //扫描指定包中的Mybatis接口，然后创建各自接口的动态代理类
 @MapperScan(value = {"com.yklis.schedule.dao"})
 //扫描本目录以及子目录的WebServlet注解

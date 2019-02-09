@@ -18,7 +18,6 @@ import org.quartz.Trigger;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import com.yklis.schedule.dao.CommCodeDao;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.entity.TaskOperateTypeEntity;
@@ -105,16 +104,9 @@ public class JobRefreshTask implements Job {
 		CommCodeEntity commCodeEntity = new CommCodeEntity();
 		commCodeEntity.setTypeName("定时任务");
 		commCodeEntity.setReserve6(1);
-		List<CommCodeEntity> dbJobList = null;
-		try {
-		dbJobList = commCodeDao.selectCommCode(commCodeEntity);
-		logger.info("Mybatis commCodeDao查询成功111111111");
-	} catch (Exception e) {
-		logger.error("Mybatis commCodeDao查询出错22222222"+e.toString());					
-	}			
+		List<CommCodeEntity> dbJobList = commCodeDao.selectCommCode(commCodeEntity);
 		//查询数据库配置的所有Job stop
 				
-		
 		/**
 		 * 通知观察者进行增、删、改
 		 * 删:quartzJoblist中有, dbJobList中没有
