@@ -22,13 +22,14 @@ import com.yklis.schedule.util.MySingleton;
 
 /**
  * @WebServlet(name = "firstServlet", urlPatterns = "/firstServlet")
- * name属性可选，而且属性值是随意的,本Servlet不处理外部请求,故无需属性urlPatterns
+ * name属性可选，而且属性值是随意的
+ * 本Servlet不处理外部请求。设置一个实际中不可能的urlPatterns，否则进不了默认html及controller方法
  * 
  * 每个Servlet对象在Tomcat容器中只有一个实例,即单例模式
  * 
  * Servlet implementation class StartupServlet
  */
-@WebServlet(loadOnStartup = 1)
+@WebServlet(loadOnStartup = 1, urlPatterns = "/A/B/C/D/E/F/G/H")
 public class StartupServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
