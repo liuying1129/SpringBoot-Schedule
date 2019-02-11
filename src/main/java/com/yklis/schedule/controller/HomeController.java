@@ -36,12 +36,12 @@ public class HomeController {
 	
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    //表示重定向欢迎页
-    @RequestMapping("/") 
-    public String abc(HttpServletRequest request) {
+    //该请求默认跳转到欢迎页。用该Ctroller重定向
+    //@RequestMapping("/")
+    //public String abc(HttpServletRequest request) {
     	
-    	return "hello";
-    }
+    //	return "index";
+    //}
     
     @RequestMapping("index")
     public ModelAndView handleIndexPageRequest(HttpServletRequest request) {
