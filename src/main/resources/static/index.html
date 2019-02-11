@@ -14,7 +14,7 @@
     <!-- Bootstrap Table -->
     <link rel="stylesheet" href="bootstrap-table/bootstrap-table.min.css" />
     
-    <link href="dev-css/dashboard.css" rel="stylesheet">	
+    <link href="dev-css/index.css" rel="stylesheet">	
 	
 </head>
 <body>
@@ -22,46 +22,37 @@
 	<!-- 两种方式访问该页面 -->
 	<!-- 1、http://localhost:8081 -->
 	<!-- 2、http://localhost:8081/index.html -->
-	欢迎您！
 	
-	<div id="app">
-  		{{ message }}
-	</div>
-
-	<div id="app-2">
-	  <span v-bind:title="message">
-	    鼠标悬停几秒钟查看此处动态绑定的提示信息！
-	  </span>
-	</div>
-	
+	<em><b>运行中JOB列表</b></em>
 	<table id="runningJob"></table>
-	<table id="allJob"></table>
+	<br />
 	
-		<div class="table-responsive">
-			<table class="table table-bordered">
-			  <caption><em><b>状态说明</b></em></caption>
-              <thead>
-                <tr>
-                  <th>None</th>
-                  <th>NORMAL</th>
-                  <th>PAUSED</th>
-                  <th>COMPLETE</th>
-                  <th>BLOCKED</th>
-                  <th>ERROR</th>
-                </tr>
-              </thead>
-              <tbody>
-					<tr>
-						<td>已经完成，且不会再执行，或者找不到该触发器</td>
-						<td>正常状态</td>
-						<td>暂停状态</td>
-						<td>触发器完成，但是任务可能还正在执行中</td>
-						<td>线程阻塞状态</td>
-						<td>出现错误</td>
-					</tr>
-              </tbody>
-			</table>                    
-		</div>		
+	<em><b>状态说明</b></em>
+	<table class="table table-bordered">	  
+            <thead>
+              <tr>
+                <th>None</th>
+                <th>NORMAL</th>
+                <th>PAUSED</th>
+                <th>COMPLETE</th>
+                <th>BLOCKED</th>
+                <th>ERROR</th>
+              </tr>
+            </thead>
+            <tbody>
+			<tr>
+				<td>已经完成，且不会再执行，或者找不到该触发器</td>
+				<td>正常状态</td>
+				<td>暂停状态</td>
+				<td>触发器完成，但是任务可能还正在执行中</td>
+				<td>线程阻塞状态</td>
+				<td>出现错误</td>
+			</tr>
+            </tbody>
+	</table>                    
+		
+	<em><b>JOB列表</b></em>
+	<table id="allJob"></table>
 	
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="jquery/jquery-3.2.1.min.js"></script>
@@ -69,25 +60,8 @@
     <script src="bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Bootstrap Table -->
     <script src="bootstrap-table/bootstrap-table.min.js"></script>
-
-	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
 	
-	<script src="dev-js/waitsched.js"></script>
+	<script src="dev-js/index.js"></script>
 	
-	<script>
-		var app = new Vue({
-		  el: '#app',
-		  data: {
-		    message: 'Hello Vue!'
-		  }
-		})	
-
-		var app2 = new Vue({
-		  el: '#app-2',
-		  data: {
-		    message: '页面加载于 ' + new Date().toLocaleString()
-		  }
-		})			
-	</script>	
 </body>
 </html>

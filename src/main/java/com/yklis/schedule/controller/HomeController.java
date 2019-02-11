@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -23,14 +21,14 @@ import org.quartz.Trigger;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
+import com.alibaba.fastjson.JSON;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.util.Constants;
 import com.yklis.schedule.util.MySingleton;
 
-@Controller
+@RestController
 @RequestMapping("/") 
 public class HomeController {
 	
@@ -43,20 +41,25 @@ public class HomeController {
     //	return "index";
     //}
     
-    @RequestMapping("index")
-    public ModelAndView handleIndexPageRequest(HttpServletRequest request) {
+    @RequestMapping("queryAllJob")
+    public String queryAllJob() {
     	
 	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-	    	
+    	
 		MySingleton mySingleton = MySingleton.getInstance();
 		Scheduler scheduler = mySingleton.getScheduler();
 		if(null == scheduler){
-			logger.warn("scheduler为空");
-	        //return new ModelAndView("index", null);//to do
+			
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -123);
+            mapResponse.put("errorMsg", "scheduler为空");
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+    		return JSON.toJSONString(map);
 		}
-		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("index");
 		
 	    try{
 			//查询所有Job start
@@ -76,8 +79,16 @@ public class HomeController {
 					try {
 						triggers = scheduler.getTriggersOfJob(jobKey);
 					} catch (SchedulerException e) {
-						logger.error("getTriggersOfJob报错:"+e.toString());
-				        //return new ModelAndView("index", null);//to do
+						
+			            Map<String, Object> mapResponse = new HashMap<>();
+			            mapResponse.put("errorCode", -123);
+			            mapResponse.put("errorMsg", "getTriggersOfJob报错:"+e.toString());
+			            
+			            Map<String, Object> map = new HashMap<>();
+			            map.put("success", false);
+			            map.put("response", mapResponse);
+			            
+			    		return JSON.toJSONString(map);
 					}
 					if(null == triggers){
 						logger.info("getTriggersOfJob为null");
@@ -129,12 +140,46 @@ public class HomeController {
 			//排序
 			Collections.sort(list,new AllJobMapComparator());			
 		
-			mv.addObject("AllJobList", list);
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("success", true);
+	        map.put("response", list);
+
+	    	return JSON.toJSONStringWithDateFormat(map, "yyyy-MM-dd HH:mm:ss");
 
     	}catch(Exception e){
-        	logger.error("查询所有Job出错:"+e.toString());
+        	
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -123);
+            mapResponse.put("errorMsg", "查询所有Job出错:"+e.toString());
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+    		return JSON.toJSONString(map);
     	}
+    }
+    
+    @RequestMapping("queryRunningJob")
+    public String queryRunningJob() {
+    	
+	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+    	
+		MySingleton mySingleton = MySingleton.getInstance();
+		Scheduler scheduler = mySingleton.getScheduler();
+		if(null == scheduler){
 			
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -123);
+            mapResponse.put("errorMsg", "scheduler为空");
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+    		return JSON.toJSONString(map);
+		}
+
 	    try{
 			//查询运行中的Job start
 	    	List<Map<String, Object>> listRun = new ArrayList<Map<String,Object>>();
@@ -220,14 +265,25 @@ public class HomeController {
 			
 			//排序
 			Collections.sort(listRun,new RunJobMapComparator());
-	
-			mv.addObject("RunJobList", listRun);
+			
+	        Map<String, Object> map = new HashMap<>();
+	        map.put("success", true);
+	        map.put("response", listRun);
+
+	    	return JSON.toJSONStringWithDateFormat(map, "yyyy-MM-dd HH:mm:ss");
 			
 	    }catch(Exception e){
-        	logger.error("查询运行中的Job出错:"+e.toString());
-	    }			
-			
-		return mv;
+        	
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -123);
+            mapResponse.put("errorMsg", "查询运行中的Job出错:"+e.toString());
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+    		return JSON.toJSONString(map);
+	    }
     }
     
     static class RunJobMapComparator implements Comparator<Map<String, Object>> {
