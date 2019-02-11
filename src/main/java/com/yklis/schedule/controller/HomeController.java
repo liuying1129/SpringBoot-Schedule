@@ -1,7 +1,5 @@
 package com.yklis.schedule.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,9 +41,7 @@ public class HomeController {
     
     @RequestMapping("queryAllJob")
     public String queryAllJob() {
-    	
-	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-    	
+    	    	
 		MySingleton mySingleton = MySingleton.getInstance();
 		Scheduler scheduler = mySingleton.getScheduler();
 		if(null == scheduler){
@@ -111,14 +107,14 @@ public class HomeController {
 				    	
                         map.put("jobDataMapTaskConfigCode", jobKey.getName());
 				    	map.put("jobTrigger", trigger.getKey());//DEFAULT.SimpleTriggerOfRefreshJob
-				    	map.put("triggerNextFireTime", dateFormat.format(trigger.getNextFireTime()));
+				    	map.put("triggerNextFireTime", trigger.getNextFireTime());//dateFormat.format()
 				    	map.put("triggerNextFireTime2", trigger.getNextFireTime());//用于排序
 				    	if(null == trigger.getPreviousFireTime()){
 				    		map.put("triggerPreviousFireTime", null);
 				    	}else{
-				    		map.put("triggerPreviousFireTime", dateFormat.format(trigger.getPreviousFireTime()));
+				    		map.put("triggerPreviousFireTime", trigger.getPreviousFireTime());//dateFormat.format()
 				    	}		    	
-				    	map.put("triggerStartTime", dateFormat.format(trigger.getStartTime()));
+				    	map.put("triggerStartTime", trigger.getStartTime());//dateFormat.format()
 				    	
 				    	try {
 					    	map.put("jobTriggerState", scheduler.getTriggerState(trigger.getKey()).name());
@@ -162,8 +158,6 @@ public class HomeController {
     
     @RequestMapping("queryRunningJob")
     public String queryRunningJob() {
-    	
-	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
     	
 		MySingleton mySingleton = MySingleton.getInstance();
 		Scheduler scheduler = mySingleton.getScheduler();
@@ -220,11 +214,11 @@ public class HomeController {
 			    	//map.put("triggerEndTime", trigger.getEndTime());
 			    	//map.put("triggerFinalFireTime", trigger.getFinalFireTime());
 			    	//map.put("triggerMisfireInstruction", trigger.getMisfireInstruction());
-			    	map.put("triggerNextFireTime", dateFormat.format(trigger.getNextFireTime()));
+			    	map.put("triggerNextFireTime", trigger.getNextFireTime());//dateFormat.format()
 			    	if(null == trigger.getPreviousFireTime()){
 			    		map.put("triggerPreviousFireTime", null);
 			    	}else{
-			    		map.put("triggerPreviousFireTime", dateFormat.format(trigger.getPreviousFireTime()));
+			    		map.put("triggerPreviousFireTime", trigger.getPreviousFireTime());//dateFormat.format()
 			    	}		    	
 			    	//map.put("triggerPriority", trigger.getPriority());
 			    	//map.put("triggerStartTime", dateFormat.format(trigger.getStartTime()));
@@ -233,7 +227,7 @@ public class HomeController {
 			    	if(null == executingJob.getFireTime()){
 			    		map.put("executingJobFireTime", null);
 			    	}else{
-			    		map.put("executingJobFireTime", dateFormat.format(executingJob.getFireTime()));
+			    		map.put("executingJobFireTime", executingJob.getFireTime());//dateFormat.format()
 			    	}
 			    	
 			    	//运行时长
