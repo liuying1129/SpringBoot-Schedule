@@ -36,6 +36,13 @@ public class HomeController {
 	
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    //表示重定向欢迎页
+    @RequestMapping("/") 
+    public String abc(HttpServletRequest request) {
+    	
+    	return "hello";
+    }
+    
     @RequestMapping("index")
     public ModelAndView handleIndexPageRequest(HttpServletRequest request) {
     	
@@ -46,7 +53,6 @@ public class HomeController {
 		if(null == scheduler){
 			logger.warn("scheduler为空");
 	        //return new ModelAndView("index", null);//to do
-			return null;
 		}
 		
 		ModelAndView mv = new ModelAndView();
@@ -72,7 +78,6 @@ public class HomeController {
 					} catch (SchedulerException e) {
 						logger.error("getTriggersOfJob报错:"+e.toString());
 				        //return new ModelAndView("index", null);//to do
-						return null;
 					}
 					if(null == triggers){
 						logger.info("getTriggersOfJob为null");
