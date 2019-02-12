@@ -41,18 +41,7 @@
 		    <artifactId>mybatis-spring-boot-starter</artifactId>
 		    <version>2.0.0</version>
 		</dependency>
-		
-		<!-- 1.4版本前:spring-boot-starter-redis，1.4版本后:spring-boot-starter-data-redis -->
-		<!-- <dependency>  
-            <groupId>org.springframework.boot</groupId>  
-            <artifactId>spring-boot-starter-data-redis</artifactId>  
-        </dependency> -->
-        
-		<dependency>
-			<groupId>redis.clients</groupId>
-			<artifactId>jedis</artifactId>
-		</dependency>
-		
+				
 		<dependency>
 		    <groupId>com.mchange</groupId>
 		    <artifactId>c3p0</artifactId>

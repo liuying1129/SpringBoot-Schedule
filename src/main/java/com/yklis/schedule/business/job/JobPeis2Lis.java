@@ -44,23 +44,22 @@ public class JobPeis2Lis implements Command {
         //切换数据源的变量准备工作stop
 		
 		List<Map<String, Object>> list11 = null;
+		
+		final String strQuery11 = "select IP.ID_Patient ,IP.PatientName ," + 
+                "IP.Org_Name ,IP.Org_Depart ,IP.Sex ," + 
+                "IP.Age ,IP.AgeUnit ,IP.Marriage ,IP.DateRegister ,IP.DoctorReg ," + 
+                "IPFI.ID_PatientFeeItem ,IPFI.PatientCode ," + 
+                "IPFI.ExamFeeItem_Code ,IPFI.LabType_Code ,IPFI.LabSampleTime " + 
+                " from IntPatient IP " + 
+                " inner join IntPatientFeeItem IPFI " + 
+                " on IP.ID_Patient=IPFI.ID_Patient " + 
+                " AND IPFI.F_LabSampled=1 " + 
+                " AND IPFI.TransfterTarget='LIS' " + 
+                " and IPFI.LabSampleTime+0.8>getdate() ";
 		try{	
 			
 			CustomerContextHolder.setCustomerType(customerTypeMap);						
 				
-			final String strQuery11 = "select IP.ID_Patient ,	IP.StrIDPatient ,	IP.PatientCodeHiden ,	IP.PatientCardNo ,	IP.IDCardNo ,	IP.PatientName ," + 
-					                "IP.ID_PatientArchive ,	IP.PatientArchiveNo ,	IP.PatientRequestNo ,	IP.Input_Code ,	IP.Org_Name ,	IP.Org_Depart ,	IP.Sex ,	IP.BirthDate ," + 
-					                "IP.Age ,	IP.AgeUnit ,	IP.AgeOfReal ,	IP.Marriage ,	IP.F_Registered ,	IP.DateRegister ,	IP.DoctorReg ,	IP.ExamType_Name ," + 
-					                "IP.F_UseCodeHiden ,	IP.ParsedSuiteAndFI ,IP.ParsedSuiteAndFILab ," + 
-					                "IPFI.ID_PatientFeeItem ,IPFI.PatientCode ,		IPFI.FeeItemRequestNo ,	IPFI.ID_Depart ,	IPFI.Depart_Name ,	IPFI.TransfterTarget ,	IPFI.ID_ExamFeeItem ,	IPFI.ExamFeeItem_Name ," + 
-					                "IPFI.ExamFeeItem_Code ,	IPFI.LabType_Name ,	IPFI.LabType_Code ,	IPFI.F_Back_Transfered,	IPFI.F_Returned,IPFI.LabSampleTime " + 
-					                " from IntPatient IP " + 
-					                " inner join IntPatientFeeItem IPFI " + 
-					                " on IP.ID_Patient=IPFI.ID_Patient " + 
-					                " AND IPFI.F_LabSampled=1 " + 
-					                " AND IPFI.TransfterTarget='LIS' " + 
-					                " and IPFI.LabSampleTime+0.8>getdate() ";
-			
     		list11 = jdbcTemplate.queryForList(strQuery11);
 			            
 		}catch(Exception e){
@@ -76,43 +75,20 @@ public class JobPeis2Lis implements Command {
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             int ID_Patient = null==map11.get("ID_Patient")?-1:Integer.parseInt(map11.get("ID_Patient").toString());
-            //String StrIDPatient = null==map11.get("StrIDPatient")?"":map11.get("StrIDPatient").toString();
             String PatientCode = null==map11.get("PatientCode")?"":map11.get("PatientCode").toString();
-            //String PatientCodeHiden = null==map11.get("PatientCodeHiden")?"":map11.get("PatientCodeHiden").toString();
-            //String PatientCardNo = null==map11.get("PatientCardNo")?"":map11.get("PatientCardNo").toString();
-            //String IDCardNo = null==map11.get("IDCardNo")?"":map11.get("IDCardNo").toString();
-            String PatientName = null==map11.get("PatientName")?"":map11.get("PatientName").toString();
-            
-            //String PatientArchiveNo = null==map11.get("PatientArchiveNo")?"":map11.get("PatientArchiveNo").toString();
-            //String PatientRequestNo = null==map11.get("PatientRequestNo")?"":map11.get("PatientRequestNo").toString();
-            //String Input_Code = null==map11.get("Input_Code")?"":map11.get("Input_Code").toString();
+            String PatientName = null==map11.get("PatientName")?"":map11.get("PatientName").toString();            
             String Org_Name = null==map11.get("Org_Name")?"":map11.get("Org_Name").toString();
             String Org_Depart = null==map11.get("Org_Depart")?"":map11.get("Org_Depart").toString();
             String Sex = null==map11.get("Sex")?"":map11.get("Sex").toString();
-            
             int Age = null==map11.get("Age")?-1:Integer.parseInt(map11.get("Age").toString());
             String AgeUnit = null==map11.get("AgeUnit")?"":map11.get("AgeUnit").toString();
-            
             String Marriage = null==map11.get("Marriage")?"":map11.get("Marriage").toString();
-                        
-            String DateRegister = dateFormat.format(map11.get("DateRegister"));
+            String DateRegister = null==map11.get("DateRegister")?"1901-01-01":dateFormat.format(map11.get("DateRegister"));//送检日期
             String DoctorReg = null==map11.get("DoctorReg")?"":map11.get("DoctorReg").toString();
-            //String ExamType_Name = null==map11.get("ExamType_Name")?"":map11.get("ExamType_Name").toString();
-            
-            //String ParsedSuiteAndFI = null==map11.get("ParsedSuiteAndFI")?"":map11.get("ParsedSuiteAndFI").toString();
-            //String ParsedSuiteAndFILab = null==map11.get("ParsedSuiteAndFILab")?"":map11.get("ParsedSuiteAndFILab").toString();
             int ID_PatientFeeItem = null==map11.get("ID_PatientFeeItem")?-1:Integer.parseInt(map11.get("ID_PatientFeeItem").toString());
-            //String FeeItemRequestNo = null==map11.get("FeeItemRequestNo")?"":map11.get("FeeItemRequestNo").toString();
-            
-            //String Depart_Name = null==map11.get("Depart_Name")?"":map11.get("Depart_Name").toString();
-            //String TransfterTarget = null==map11.get("TransfterTarget")?"":map11.get("TransfterTarget").toString();
-            
-            //String ExamFeeItem_Name = null==map11.get("ExamFeeItem_Name")?"":map11.get("ExamFeeItem_Name").toString();
             String ExamFeeItem_Code = null==map11.get("ExamFeeItem_Code")?"":map11.get("ExamFeeItem_Code").toString();
-            //String LabType_Name = null==map11.get("LabType_Name")?"":map11.get("LabType_Name").toString();
             String LabType_Code = null==map11.get("LabType_Code")?"":map11.get("LabType_Code").toString();
-            
-            String LabSampleTime = dateFormat.format(map11.get("LabSampleTime"));
+            String LabSampleTime = null==map11.get("LabSampleTime")?"1901-01-01":dateFormat.format(map11.get("LabSampleTime"));//采样时间
 
             //判断该申请单ID的病人申请单是否存在start
             String strQuery22 = " select cch.unid from chk_con_his cch where cch.His_Unid='" + ID_Patient + 
@@ -165,7 +141,7 @@ public class JobPeis2Lis implements Command {
 
       	        //不插入PeIS的样本类型，由拆分存储过程去处理（拿组合项目的默认样本类型）
             	String strQuery44 = "insert into chk_con_his (patientname,sex,age,report_date,bedno,His_Unid,check_doctor,deptname,combin_id,Caseno,diagnose,Diagnosetype,typeflagcase,WorkCompany,WorkDepartment,ifMarry) values "+
-      	                            " ('"+PatientName+"','"+Sex+"','"+Age+AgeUnit+"','"+DateRegister+"','"+""+"','"+ID_Patient+"','"+DoctorReg+"','"+"体检科"+"','"+Org_Name+"','"+PatientCode+"','"+""+"','常规','正常','"+Org_Name+"','"+Org_Depart+"','"+Marriage+"') ";            	
+      	                            " ('"+PatientName+"','"+Sex+"','"+Age+AgeUnit+"','"+DateRegister+"','"+""+"','"+ID_Patient+"','"+DoctorReg+"','"+"体检科"+"','"+""+"','"+PatientCode+"','"+""+"','常规','正常','"+Org_Name+"','"+Org_Depart+"','"+Marriage+"') ";            	
                 try{
                 	
                     jdbcTemplate.update(strQuery44);
@@ -184,9 +160,15 @@ public class JobPeis2Lis implements Command {
                         
                 	logger.error("LIS中查询刚插入的PEIS基本信息"+ID_Patient+"失败:"+e.toString());
                 	continue;
-                }
+                }                
             }
             
+            if((null==Insert_Identity)||"".equals(Insert_Identity)) {
+            	
+            	logger.error("LIS中查询不到刚插入的PEIS基本信息"+ID_Patient);
+            	continue;
+            }
+            	
             //获取申请单元ID的LIS对照start
             String strQuery66 = "select c.id from HisCombItem hci,combinitem c "+
                                 " where hci.CombUnid=c.unid and hci.ExtSystemId='PEIS' and hci.HisItem='"+ExamFeeItem_Code+"' ";
@@ -249,30 +231,20 @@ public class JobPeis2Lis implements Command {
             		}
                     //切换数据源的变量准备工作stop
 
+                    String strQuery444 = "UPDATE IntPatientFeeItem SET F_Back_Transfered=1 WHERE ID_PatientFeeItem="+ID_PatientFeeItem;
             		try {
             			
 	            		CustomerContextHolder.setCustomerType(customerTypeMap444);
 	            		
-	                    String strQuery444 = "UPDATE IntPatientFeeItem SET F_Back_Transfered=1 WHERE ID_PatientFeeItem="+ID_PatientFeeItem;
-	                    try{
-	                    	
-	                        jdbcTemplate.update(strQuery444);
-	
-	                    }catch(Exception e){
-	                            
-	                    	logger.error("Peis收费项目主键"+ID_PatientFeeItem+",修改其读取标志F_Back_Transfered失败:"+e.toString());
-	                    	continue;
-	                    }
-                    
+	                    jdbcTemplate.update(strQuery444);                    
 	        		}catch(Exception e){
 	        			logger.error("切换数据源，执行出错:" + e.toString());
 	        		}finally{
 	        			CustomerContextHolder.clearCustomerType();
 	        		}
-
                 }
             }
-            //获取申请单元ID的LIS对照stop            
+            //获取申请单元ID的LIS对照stop
         }
 		
         //拆分申请单        		
