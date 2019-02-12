@@ -84,6 +84,9 @@
 	</dependencies>
 
 	<build>
+	    <!-- 如果不定义finalName，则生成的包名是artifactId-version.war -->
+	    <!-- 定义finalName，则生成的包名是finalName.war -->
+	    <finalName>YkSchedule</finalName>
 	
 	    <!-- 如果不加该resources，则打包时只会默认将src/main/resources的文件做为资源文件打包，漏掉dao目录下的xml资源文件 -->
 		<resources>  

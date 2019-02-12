@@ -141,24 +141,15 @@ public class JobPeis2Lis implements Command {
 
       	        //不插入PeIS的样本类型，由拆分存储过程去处理（拿组合项目的默认样本类型）
             	String strQuery44 = "insert into chk_con_his (patientname,sex,age,report_date,bedno,His_Unid,check_doctor,deptname,combin_id,Caseno,diagnose,Diagnosetype,typeflagcase,WorkCompany,WorkDepartment,ifMarry) values "+
-      	                            " ('"+PatientName+"','"+Sex+"','"+Age+AgeUnit+"','"+DateRegister+"','"+""+"','"+ID_Patient+"','"+DoctorReg+"','"+"体检科"+"','"+""+"','"+PatientCode+"','"+""+"','常规','正常','"+Org_Name+"','"+Org_Depart+"','"+Marriage+"') ";            	
+      	                            " ('"+PatientName+"','"+Sex+"','"+Age+AgeUnit+"','"+DateRegister+"','"+""+"','"+ID_Patient+"','"+DoctorReg+"','"+"体检科"+"','"+""+"','"+PatientCode+"','"+""+"','常规','正常','"+Org_Name+"','"+Org_Depart+"','"+Marriage+"') "+
+            			            " SELECT SCOPE_IDENTITY() AS Insert_Identity ";                
                 try{
                 	
-                    jdbcTemplate.update(strQuery44);
+                    Insert_Identity = jdbcTemplate.queryForObject(strQuery44,String.class);
 
                 }catch(Exception e){
                         
                 	logger.error("向LIS中插入PEIS基本信息"+ID_Patient+"时失败:"+e.toString());
-                	continue;
-                }
-                
-                try{
-                	
-                    Insert_Identity = jdbcTemplate.queryForObject("SELECT SCOPE_IDENTITY() AS Insert_Identity",String.class);
-
-                }catch(Exception e){
-                        
-                	logger.error("LIS中查询刚插入的PEIS基本信息"+ID_Patient+"失败:"+e.toString());
                 	continue;
                 }                
             }
