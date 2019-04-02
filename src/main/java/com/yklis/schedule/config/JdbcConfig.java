@@ -16,6 +16,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
  * 	
  * @author liuyi
  * 
+ * @Configuration把一个类作为一个IoC容器，它的某个方法头上如果注册了@Bean，就会作为这个Spring容器中的Bean
+ * @Configuration可理解为用spring的时候xml里面的<beans>标签
+ * @Bean可理解为用spring的时候xml里面的<bean>标签
+ * 
  */
 @Configuration
 @Order(5)
