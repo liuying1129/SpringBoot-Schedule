@@ -15,6 +15,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * 享元模式(又叫蝇量模式)
@@ -27,6 +28,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 @ServerEndpoint("/websocket/{userId}")
+@Component
 public class WebSocketNewValue {
 	
     //配置容器起动时候加载log4j配置文件
