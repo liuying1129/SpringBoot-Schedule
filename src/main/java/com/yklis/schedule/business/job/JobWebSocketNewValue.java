@@ -50,7 +50,7 @@ public class JobWebSocketNewValue implements Command {
         List<Map<String, Object>> list = null;
         try{
         	//bug:如果有多个相同名称的送检医生，会产生重复的病人结果，但送检医生id不同,即该结果会向每个相同名称的送检医生发送(其实问题也不大)
-            list = jdbcTemplate.queryForList("SELECT cc.unid,cc.patientname,w.id FROM Chk_Con cc,worker w WHERE cc.check_doctor=w.name and cc.unid>"+unid+" AND isnull(cc.report_doctor,'')<>'' order by cc.unid ");
+            list = jdbcTemplate.queryForList("SELECT cc.unid,cc.patientname,lower(w.id) as id FROM Chk_Con cc,worker w WHERE cc.check_doctor=w.name and cc.unid>"+unid+" AND isnull(cc.report_doctor,'')<>'' order by cc.unid ");
         }catch(Exception e){
             logger.error("jdbcTemplate.queryForList失败:"+e.toString());
         }

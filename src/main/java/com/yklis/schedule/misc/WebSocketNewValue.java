@@ -61,7 +61,7 @@ public class WebSocketNewValue {
 		this.session = session;
 		this.userId = userId;
 	    
-	    wsMap.put(userId,this);
+	    wsMap.put(userId.toLowerCase(),this);
 	}
 	
     //连接关闭时的调用方法
@@ -69,7 +69,7 @@ public class WebSocketNewValue {
     public void onClose(){
     	
         logger.info("WebSocket客户端["+this.userId+"]已经断开");
-        wsMap.remove(userId);
+        wsMap.remove(userId.toLowerCase());
     }
     
     /**
