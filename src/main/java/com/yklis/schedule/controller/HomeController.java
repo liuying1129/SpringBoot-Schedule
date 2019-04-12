@@ -19,6 +19,8 @@ import org.quartz.Trigger;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
@@ -32,6 +34,9 @@ public class HomeController {
 	
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
     //该请求默认跳转到欢迎页。用该Ctroller重定向
     //@RequestMapping("/")
     //public String abc(HttpServletRequest request) {
@@ -339,5 +344,33 @@ public class HomeController {
         	}
         }
  
+    }
+    
+    @RequestMapping("static/queryJobList")
+    public String queryJobList() {
+    	    	
+    	String sql = "select Unid,ID,Name,Remark,Reserve,Reserve2,Reserve3,Reserve5,Reserve6 from CommCode where TypeName='定时任务' ";
+    	
+    	try{
+    		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql);
+    		                
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", true);
+            map.put("response", list);
+            
+	    	return JSON.toJSONStringWithDateFormat(map, "yyyy-MM-dd HH:mm:ss");	    	
+    	    	
+    	}catch(Exception e){
+    		    		                
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -123);
+            mapResponse.put("errorMsg", "sql执行出错:"+e.toString()+"。错误的SQL:"+sql);
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+	    	return JSON.toJSONString(map);
+    	}    	
     }
 }
