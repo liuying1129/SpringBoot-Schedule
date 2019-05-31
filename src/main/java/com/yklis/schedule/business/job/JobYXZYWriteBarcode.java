@@ -35,7 +35,7 @@ public class JobYXZYWriteBarcode implements Command {
         
         List<Map<String, Object>> list = null;
         try{
-            list = jdbcTemplate.queryForList(" select Unid,TjJianYan from chk_con_his cch WITH(NOLOCK) where cch.check_date+30>getdate() ");
+            list = jdbcTemplate.queryForList(" select Unid,TjJianYan from chk_con_his cch WITH(NOLOCK) where cch.check_date+10>getdate() ");
         }catch(Exception e){            
             logger.error("jdbcTemplate.queryForList失败:"+e.toString());
         }
