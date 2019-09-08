@@ -14,6 +14,9 @@
     <!-- Bootstrap Table -->
     <link rel="stylesheet" href="bootstrap-table/bootstrap-table.min.css" />
     
+    <!-- 鼠标悬停动画.官网:https://github.com/IanLunn/Hover -->
+    <link rel="stylesheet" href="hover-css/hover-min.css" />
+    
 	<!-- element-ui -->
 	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 
@@ -26,16 +29,15 @@
 	<!-- 1、http://localhost:8081 -->
 	<!-- 2、http://localhost:8081/index.html -->
 	
-	<div>
-		<a href="static/taskManage.html" target="_blank">定时任务管理</a>
-	</div>
+	<!-- <a href="static/taskManage.html" target="_blank">定时任务管理</a> -->
+	<img src="images/setup.png" alt="设置" title="定时任务管理" class="hvr-grow" />
 	
 	<em><b>运行中JOB列表</b></em>
 	<table id="runningJob"></table>
 	<br />
 	
 	<em><b>状态说明</b></em>
-	<table class="table table-bordered">	  
+	<table class="table table-bordered">
             <thead>
               <tr>
                 <th>None</th>
