@@ -21,6 +21,10 @@ $(document).ready(function() {
 		        columns: [{
 			        field: 'Unid',
 			        title: '唯一编号',
+			        formatter: function formatter(value, row, index, field) {
+			        	
+			        	return "<a href='#myModal' data-toggle='modal'>" + value + "</a>";
+			        }
 			    }, {
 			        field: 'ID',
 			        title: '编号'
