@@ -23,7 +23,7 @@ $(document).ready(function() {
 			        title: '唯一编号',
 			        formatter: function formatter(value, row, index, field) {
 			        	
-			        	return "<a href='#myModal' data-toggle='modal'>" + value + "</a>";
+			        	return "<a href='#myModal' data-toggle='modal' data-title='修改' data-unid='"+value+"' data-id='"+row.ID+"' data-name='"+row.Name+"' data-remark='"+row.Remark+"' data-reserve='"+row.Reserve+"' data-reserve2='"+row.Reserve2+"' data-reserve3='"+row.Reserve3+"' data-reserve5='"+row.Reserve5+"' data-reserve6='"+row.Reserve6+"'>" + value + "</a>";
 			        }
 			    }, {
 			        field: 'ID',
@@ -57,4 +57,26 @@ $(document).ready(function() {
 			console.log("ajax请求失败,请求:queryJobList,状态码:"+xhr.status +",状态说明:"+ textStatus+",xhr readyState:"+xhr.readyState);
 		}
 	});
+	
+	//模式窗口的shown事件
+	$('#myModal').on('shown.bs.modal', function (e) {
+		
+		var modal_relatedTarget = $(e.relatedTarget);
+		
+		document.getElementById("myModalTitle").innerHTML = modal_relatedTarget.data("title");
+		document.getElementById("unid").innerHTML = modal_relatedTarget.data("unid");
+		document.getElementById("id").value = modal_relatedTarget.data("id");
+		document.getElementById("name").value = modal_relatedTarget.data("name");
+		document.getElementById("remark").value = modal_relatedTarget.data("remark");
+		document.getElementById("reserve").value = modal_relatedTarget.data("reserve");
+		document.getElementById("reserve2").value = modal_relatedTarget.data("reserve2");
+		document.getElementById("reserve3").value = modal_relatedTarget.data("reserve3");
+		document.getElementById("reserve5").value = modal_relatedTarget.data("reserve5");
+		document.getElementById("reserve6").value = modal_relatedTarget.data("reserve6");
+	    //alert(JSON.stringify($('#myModal').data()));
+	})
 });
+
+var btnSave = document.getElementById("btnSave");
+btnSave.onclick = function() {
+};
