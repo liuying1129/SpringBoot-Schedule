@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -372,5 +375,40 @@ public class HomeController {
             
 	    	return JSON.toJSONString(map);
     	}    	
+    }
+    
+    @RequestMapping("static/taskOnoff")
+    public String taskOnoff(HttpServletRequest request,HttpServletResponse response) {
+    	
+    	String unid = request.getParameter("unid");
+    	String reserve6 = request.getParameter("reserve6");
+    	    	    	
+    	String sql = "update CommCode set Reserve6="+("1".equals(reserve6)?0:1)+" where Unid="+unid;
+    	
+        try{
+            jdbcTemplate.update(sql);
+                            
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("id", -1);
+            mapResponse.put("msg", "sql执行成功");
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", true);
+            map.put("response", mapResponse);
+            
+            return JSON.toJSONString(map);
+
+        }catch(Exception e){
+                
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -223);
+            mapResponse.put("errorMsg", "sql执行出错:"+e.toString()+"。错误的SQL:"+sql);
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+            return JSON.toJSONString(map);
+        }
     }
 }
