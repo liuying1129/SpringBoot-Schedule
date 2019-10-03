@@ -1,0 +1,9 @@
+#myModal input[type="text"] {
+	
+	width: 100%;
+}
+
+img[alt="任务状态"] {
+
+    cursor: pointer;
+}

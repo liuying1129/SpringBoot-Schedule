@@ -1,5 +1,5 @@
-img {
-    position: absolute;
+img[alt="设置"] {
+    position: absolute;/* 层模型->绝对定位 */
     
     z-index: 99999;/* 置于最上层 */
 

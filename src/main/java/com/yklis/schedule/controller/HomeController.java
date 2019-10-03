@@ -411,4 +411,88 @@ public class HomeController {
             return JSON.toJSONString(map);
         }
     }
+    
+    @RequestMapping("static/saveTask")
+    public String saveTask(HttpServletRequest request,HttpServletResponse response) {
+    	
+    	String unid = request.getParameter("unid");
+    	String id = request.getParameter("id");
+    	String name = request.getParameter("name");
+    	String remark = request.getParameter("remark");
+    	String reserve = request.getParameter("reserve");
+    	String reserve2 = request.getParameter("reserve2");
+    	String reserve3 = request.getParameter("reserve3");
+    	String reserve5 = request.getParameter("reserve5");
+
+    	try {
+    		Integer.parseInt(reserve5);
+    	}catch(Exception e){
+    		reserve5 = "null";
+    	}
+    	    	    	 
+    	String sql;
+    	if((unid==null)||("".equals(unid))){
+        	sql = "insert into CommCode (TypeName,SysName,id,name,remark,reserve,reserve2,reserve3,reserve5) values ('定时任务','LIS','"+id+"','"+name+"','"+remark+"','"+reserve+"','"+reserve2+"','"+reserve3+"',"+reserve5+")";    		
+    	}else {
+        	sql = "update CommCode set id='"+id+"',name='"+name+"',remark='"+remark+"',reserve='"+reserve+"',reserve2='"+reserve2+"',reserve3='"+reserve3+"',reserve5="+reserve5+" where Unid="+unid;    		
+    	}
+        try{
+            jdbcTemplate.update(sql);
+                            
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("id", -1);
+            mapResponse.put("msg", "sql执行成功");
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", true);
+            map.put("response", mapResponse);
+            
+            return JSON.toJSONString(map);
+
+        }catch(Exception e){
+                
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -223);
+            mapResponse.put("errorMsg", "sql执行出错:"+e.toString()+"。错误的SQL:"+sql);
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+            return JSON.toJSONString(map);
+        }
+    }
+    
+    @RequestMapping("static/deleteTask")
+    public String deleteTask(HttpServletRequest request,HttpServletResponse response) {
+    	
+    	String unid = request.getParameter("unid");
+    	    	    	 
+    	String sql = "delete from CommCode where Unid="+unid;
+        try{
+            jdbcTemplate.update(sql);
+                            
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("id", -1);
+            mapResponse.put("msg", "sql执行成功");
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", true);
+            map.put("response", mapResponse);
+            
+            return JSON.toJSONString(map);
+
+        }catch(Exception e){
+                
+            Map<String, Object> mapResponse = new HashMap<>();
+            mapResponse.put("errorCode", -223);
+            mapResponse.put("errorMsg", "sql执行出错:"+e.toString()+"。错误的SQL:"+sql);
+            
+            Map<String, Object> map = new HashMap<>();
+            map.put("success", false);
+            map.put("response", mapResponse);
+            
+            return JSON.toJSONString(map);
+        }
+    }
 }
