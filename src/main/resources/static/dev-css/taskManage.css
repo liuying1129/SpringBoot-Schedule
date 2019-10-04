@@ -7,3 +7,14 @@ img[alt="任务状态"] {
 
     cursor: pointer;
 }
+
+img[alt="新增定时任务"] {
+    position: absolute;/* 层模型->绝对定位 */
+    
+    z-index: 99999;/* 置于最上层 */
+
+    right: 10px;
+    top: 50px;
+
+    cursor: pointer;
+}
