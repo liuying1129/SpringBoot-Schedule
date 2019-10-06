@@ -10,7 +10,12 @@ import org.quartz.Scheduler;
  */
 public class MySingleton {
 	
-	//构造函数为 private,这样该类就不会被实例化
+    //JAVA规定，如果类中没有定义任何构造函数，JVM自动为其生成一个默认的构造函数
+    //故可不需要手动写下面的构造函数
+    //public JobSPH2CJ(){       
+    //}
+	
+	//构造函数为private,这样该类就不会被外部实例化
 	private MySingleton() {}  
 	
 	//自行实例化
