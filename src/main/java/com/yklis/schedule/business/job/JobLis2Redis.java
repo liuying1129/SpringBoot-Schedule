@@ -62,7 +62,7 @@ public class JobLis2Redis implements Command {
 
             List<Map<String, Object>> list = null;
             try{
-                list = jdbcTemplate.queryForList(" select * from chk_con_bak ch where isnull(TjJiWangShi,'')<>'1' ");
+                list = jdbcTemplate.queryForList(" select * from chk_con_bak ch WITH(NOLOCK) where isnull(TjJiWangShi,'')<>'1' ");
             }catch(Exception e){            
                 logger.error("获取待导入Redis列表(病人基本信息)失败:"+e.toString());
             }
@@ -124,7 +124,7 @@ public class JobLis2Redis implements Command {
             
             List<Map<String, Object>> list3 = null;
             try{
-                list3 = jdbcTemplate.queryForList(" select ch.check_date,cv.* from chk_con_bak ch,chk_valu_bak cv where ch.unid=cv.pkunid and ltrim(rtrim(isnull(cv.itemvalue,'')))<>'' and isnull(cv.Reserve6,0)<>1 ");
+                list3 = jdbcTemplate.queryForList(" select ch.check_date,cv.* from chk_con_bak ch WITH(NOLOCK),chk_valu_bak cv WITH(NOLOCK) where ch.unid=cv.pkunid and ltrim(rtrim(isnull(cv.itemvalue,'')))<>'' and isnull(cv.Reserve6,0)<>1 ");
             }catch(Exception e){            
                 logger.error("获取待导入Redis列表(病人检查项目及结果)失败:"+e.toString());
             }

@@ -54,8 +54,8 @@ public class RedisConfig {
     @Value("${redis.port}")
     private int port;
  
-    @Value("${redis.timeout}")
-    private int timeout;        		    		   		
+    //@Value("${redis.timeout}")
+    //private int timeout;        		    		   		
  
     @Value("${redis.pool.maxTotal}")
     private int maxTotal;
@@ -66,11 +66,11 @@ public class RedisConfig {
     @Value("${redis.pool.maxWaitMillis}")
     private int maxWaitMillis;
  
-    @Value("${redis.pool.testOnBorrow}")
-    private boolean  testOnBorrow;
+    //@Value("${redis.pool.testOnBorrow}")
+    //private boolean  testOnBorrow;
     
-    @Value("${redis.pool.testOnReturn}")
-    private boolean  testOnReturn;
+    //@Value("${redis.pool.testOnReturn}")
+    //private boolean  testOnReturn;
 
     @Bean
     public ShardedJedisPool shardedJedisPool() throws Exception{
@@ -84,7 +84,7 @@ public class RedisConfig {
         //获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间,  默认-1
         jedisPoolConfig.setMaxWaitMillis(maxWaitMillis);
         
-        JedisShardInfo jedisShardInfo1 = new JedisShardInfo(host, port, timeout);
+        JedisShardInfo jedisShardInfo1 = new JedisShardInfo(host, port);
         List<JedisShardInfo> jedisShardInfoList = Arrays.asList(jedisShardInfo1);
         
         ShardedJedisPool shardedJedisPool = new ShardedJedisPool(jedisPoolConfig, jedisShardInfoList);
