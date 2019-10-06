@@ -37,13 +37,8 @@ public class JobLis2Redis implements Command {
     //如果用了它反而会出现上面的错误--Could not read configuration file [log4jj.properties]
     //PropertyConfigurator.configure("log4jj.properties");
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);    
-    private ShardedJedisPool shardedJedisPool = SpringUtils.getBean(ShardedJedisPool.class);
 
     //类成员变量,类实例化对象时被执行
-    //从连接池池中获取一个Jedis对象
-    //private ShardedJedis shardedJedis = shardedJedisPool.getResource();
     
     //JAVA规定，如果类中没有定义任何构造函数，JVM自动为其生成一个默认的构造函数
     //故可不需要手动写下面的构造函数
@@ -55,9 +50,14 @@ public class JobLis2Redis implements Command {
         
         //经测试,网络中断,JOB报错,网络复通后JOB可正常运行并正常写Redis
         
+        JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
+        ShardedJedisPool shardedJedisPool = SpringUtils.getBean(ShardedJedisPool.class);
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        
         ShardedJedis shardedJedis = null;
         try{
-            //从连接池池中获取一个Jedis对象  
+            //从连接池中获取一个Jedis对象  
             shardedJedis = shardedJedisPool.getResource();
 
             List<Map<String, Object>> list = null;
