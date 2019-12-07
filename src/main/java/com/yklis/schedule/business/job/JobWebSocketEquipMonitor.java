@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,6 +91,8 @@ public class JobWebSocketEquipMonitor implements Command {
 		        }
             }
             
+            patientname=replaceNameX(patientname);
+            
 	        //指定设备当天的样本数量
 	        int todayNum = 0;
         	try{
@@ -132,4 +136,27 @@ public class JobWebSocketEquipMonitor implements Command {
 	        }
         }
 	}
+	
+	/**
+	 * 正则姓名加密，保留姓，名用*号代替
+	 * @param str
+	 * @return
+	 */
+	private String replaceNameX(String nameStr){
+		
+		if(null==nameStr) return null;
+
+		String reg = ".{1}";
+		StringBuffer sb = new StringBuffer();
+		Pattern p = Pattern.compile(reg);
+		Matcher m = p.matcher(nameStr);
+		int i = 0;
+		while(m.find()){
+			i++;
+			if(i==1) continue;
+			m.appendReplacement(sb, "*");
+		}
+		m.appendTail(sb);
+		return sb.toString();
+	}	
 }
