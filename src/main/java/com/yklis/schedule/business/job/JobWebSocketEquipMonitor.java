@@ -117,6 +117,30 @@ public class JobWebSocketEquipMonitor implements Command {
                 logger.error("jdbcTemplate.queryForObject失败:"+e.toString());
         	}
                         	        
+	        //指定设备昨天的样本数量
+	        int yesterdayNum = 0;
+        	try{
+        		//sql要求：
+        		//1、有且仅有一条记录
+        		//2、有且仅有一个字段
+        		//3、字段在DB中的类型不限
+        		yesterdayNum = jdbcTemplate.queryForObject("select count(distinct pkunid) from view_chk_valu_All c WITH(NOLOCK),view_Chk_Con_All z WITH(NOLOCK) where z.unid=c.pkunid and CONVERT(CHAR(10),z.check_date,121)=CONVERT(CHAR(10),getdate()-1,121) and c.EquipUnid="+equipUnid,int.class);
+        	}catch(Exception e){
+                logger.error("jdbcTemplate.queryForObject失败:"+e.toString());
+        	}
+        	
+	        //指定设备上月的样本数量
+	        int preMonthNum = 0;
+        	try{
+        		//sql要求：
+        		//1、有且仅有一条记录
+        		//2、有且仅有一个字段
+        		//3、字段在DB中的类型不限
+        		preMonthNum = jdbcTemplate.queryForObject("select count(distinct pkunid) from view_chk_valu_All c WITH(NOLOCK),view_Chk_Con_All z WITH(NOLOCK) where z.unid=c.pkunid and z.check_date>=DATEADD(MONTH,DATEDIFF(MONTH,0,GETDATE())-1,0) and z.check_date<=dateadd(ms,-3,DATEADD(mm,DATEDIFF(mm,0,getdate()),0)) and c.EquipUnid="+equipUnid,int.class);
+        	}catch(Exception e){
+                logger.error("jdbcTemplate.queryForObject失败:"+e.toString());
+        	}
+                        	        
 	        //将病人信息转换为待发送的map
             Map<String, Object> mapSend = new HashMap<>();
             mapSend.put("equipUnid", equipUnid);
@@ -124,6 +148,8 @@ public class JobWebSocketEquipMonitor implements Command {
             mapSend.put("check_date", null==check_date||"".equals(check_date)?"未知时间":check_date);
             mapSend.put("todayNum", todayNum);
             mapSend.put("thisMonthNum", thisMonthNum);
+            mapSend.put("yesterdayNum", yesterdayNum);
+            mapSend.put("preMonthNum", preMonthNum);
                 		
 	        //发送信息
 	        for (WebSocketEquipMonitor wsItem : WebSocketEquipMonitor.wsSet) {
