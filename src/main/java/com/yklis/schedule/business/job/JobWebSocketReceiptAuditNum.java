@@ -25,7 +25,7 @@ public class JobWebSocketReceiptAuditNum implements Command {
     		//1、有且仅有一条记录
     		//2、有且仅有一个字段
     		//3、字段在DB中的类型不限
-    		receiptAuditNum = jdbcTemplate.queryForObject("select COUNT(*) from SJ_RK_Fu where Audit_Date is null",int.class);
+    		receiptAuditNum = jdbcTemplate.queryForObject("select COUNT(*) from SJ_RK_Fu WITH(NOLOCK) where Audit_Date is null",int.class);
     	}catch(Exception e){
             logger.error("jdbcTemplate.queryForObject失败:"+e.toString());
             return;
