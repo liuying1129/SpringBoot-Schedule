@@ -37,7 +37,7 @@ public class JobWebSocketReceiptAuditNum implements Command {
            	
             	wsItem.getSession().getBasicRemote().sendText(String.valueOf(receiptAuditNum));
             } catch (IOException e) {
-            	logger.error("设备监控WebSocket sendText错误");
+            	logger.error("待审核耗材入库单数量WebSocket sendText错误");
             }
         }                        
 	}

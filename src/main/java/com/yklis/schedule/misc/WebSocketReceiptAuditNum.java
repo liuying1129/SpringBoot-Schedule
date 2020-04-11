@@ -41,7 +41,7 @@ public class WebSocketReceiptAuditNum {
 	@OnOpen
 	public void onOpen(Session session){
 
-        logger.info("WebSocket设备监控客户端已经连接");
+        logger.info("WebSocket待审核耗材入库单数量的客户端已经连接");
         
 		this.session = session;
 	    
@@ -52,7 +52,7 @@ public class WebSocketReceiptAuditNum {
     @OnClose
     public void onClose(){
     	
-        logger.info("WebSocket设备监控客户端已经断开");
+        logger.info("WebSocket待审核耗材入库单数量的客户端已经断开");
         wsSet.remove(this);
     }
     
@@ -74,7 +74,7 @@ public class WebSocketReceiptAuditNum {
     @OnError
     public void onError(Session session, Throwable error){
     	
-        logger.info("WebSocket设备监控客户端发生错误");
+        logger.info("WebSocket待审核耗材入库单数量的客户端发生错误");
         error.printStackTrace();
     }
     
