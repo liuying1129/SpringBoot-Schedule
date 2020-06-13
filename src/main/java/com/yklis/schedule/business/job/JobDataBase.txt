@@ -1,0 +1,3 @@
+删除为0的耗材库存
+强烈建议23:03执行:0 3 23 * * ?
+delete from SJ_KC where SL=0

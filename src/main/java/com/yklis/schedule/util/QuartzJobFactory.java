@@ -13,9 +13,6 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.alibaba.fastjson.JSON;
 import com.yklis.schedule.config.CustomerContextHolder;
 import com.yklis.schedule.entity.CommCodeEntity;
@@ -105,10 +102,10 @@ public class QuartzJobFactory implements Job {
 			try{			
 				CustomerContextHolder.setCustomerType(customerTypeMap);
 					
-		        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
-		        JdbcTemplate jdbcTemplate = webApplicationContext.getBean(JdbcTemplate.class);
+				JdbcTemplate jdbcTemplate = SpringUtils.getBean(JdbcTemplate.class);
 		        
 	            if((commCodeEntity.getReserve2().toLowerCase().indexOf("insert ")>=0)
+	                ||(commCodeEntity.getReserve2().toLowerCase().indexOf("delete ")>=0)
 	                ||(commCodeEntity.getReserve2().toLowerCase().indexOf("update ")>=0)){
 	                
                     int execResult = jdbcTemplate.update(commCodeEntity.getReserve2());
