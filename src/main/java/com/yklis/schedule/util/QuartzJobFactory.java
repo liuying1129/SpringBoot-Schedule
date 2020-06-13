@@ -43,6 +43,8 @@ public class QuartzJobFactory implements Job {
 		switch(commCodeEntity.getReserve()){
 		case "Class":
 			
+			//使用 Class<?>比单纯使用 Class要好,虽然它们是等价的,并且单纯使用 Class不会产生编译器警告信息.
+			//使用 Class<?>的好处是,表示你并非是碰巧或者由于疏忽才使用了一个非具体的类引用，而是特意为之
 	        Class<?> ownerClass = null;
 			try {
 				ownerClass = Class.forName(commCodeEntity.getReserve2());
