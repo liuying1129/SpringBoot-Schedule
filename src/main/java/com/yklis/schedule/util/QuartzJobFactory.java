@@ -18,10 +18,10 @@ import com.yklis.schedule.config.CustomerContextHolder;
 import com.yklis.schedule.entity.CommCodeEntity;
 
 /**
- * 命令模式
- * 命令执行类
  * 
- * 自定义任务到达触发时间就会执行execute
+ * 见类AddTaskObserverServiceImpl，代码JobBuilder.newJob(QuartzJobFactory.class).withIdentity(jobKey).build();
+ * 上述代码自定义任务，到达触发时间就会执行本类的execute方法
+ * 
  * @author ying07.liu
  *
  */

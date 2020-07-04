@@ -64,7 +64,13 @@ public class DeleteTaskObserverServiceImpl implements TaskObserverService {
 	        break;
 	    case DELETE_ALL:
 	        
-	        GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
+			//GroupMatcher.anyJobGroup()方法匹配到所有组的job,包含了下面的两个jobKey
+			//GroupOfJobRefreshTask.JobRefreshTask
+			//JobSchedulingDataLoaderPlugin.JobSchedulingDataLoaderPlugin_jobInitializer_quartz_jobs_xml
+			//GroupOfJobRefreshTask、JobSchedulingDataLoaderPlugin为JobGroup
+			//这两个job是本程序的守护job,不能删除，故使用GroupMatcher.jobGroupEquals方法
+            //JobSchedulingDataLoaderPlugin_jobInitializer_quartz_jobs_xml是quartz自带的检测quartz_jobs.xml的job
+			GroupMatcher<JobKey> matcher = GroupMatcher.jobGroupEquals(Constants.DEFAULT_JOB_GROUP);
 	        Set<JobKey> jobKeys = null;
 	        try {
 	            jobKeys = scheduler.getJobKeys(matcher);
@@ -73,11 +79,6 @@ public class DeleteTaskObserverServiceImpl implements TaskObserverService {
 	        }
 	        for (JobKey jobKey22 : jobKeys) {
 	            
-                //JobRefreshTask增、删、改JOB的JOB
-                //JobSchedulingDataLoaderPlugin_jobInitializer_quartz_jobs_xml是检测quartz_jobs。xml的job
-                if("JobRefreshTask".equalsIgnoreCase(jobKey22.getName()))continue;
-                if("JobSchedulingDataLoaderPlugin_jobInitializer_quartz_jobs_xml".equalsIgnoreCase(jobKey22.getName()))continue;
-
                 try {
                     scheduler.deleteJob(jobKey22);
                     logger.info("移除任务,JobKey:" + jobKey22.getName());
