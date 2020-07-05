@@ -134,7 +134,7 @@
 		     	</executions>
 		     	<configuration>
 		        	<!-- 自动识别项目target文件夹 -->
-                	<basedir>${build.directory}</basedir>
+                	<basedir>${project.build.directory}</basedir>
                 	<!-- 替换的文件所在目录规则 -->
                 	<includes>
                     	<include>**/*.html</include>
