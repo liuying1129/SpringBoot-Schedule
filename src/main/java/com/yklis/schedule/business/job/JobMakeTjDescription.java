@@ -25,6 +25,11 @@ import com.yklis.schedule.util.SpringUtils;
  * 已生成列表进行颜色标识，表示可以进行后续工作了
  * @author ying07.liu
  *
+ * job类为多例.验证依据参考:https://mp.weixin.qq.com/s/FxJZ9zVABnRNEQky9P-52g
+ * 设置类成员变量int i
+ * 方法中i=i+1
+ * 查看每次执行后变量i的结果是否被污染,从而进行判断
+ * 
  */
 public class JobMakeTjDescription implements Command {
 
