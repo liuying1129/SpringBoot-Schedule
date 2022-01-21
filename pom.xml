@@ -49,6 +49,7 @@
 		</dependency>
 				
 		<dependency>
+			<!-- 分布式定时任务框架.缺点:quartz分布式仅解决了集群高可用(HA)问题,没有解决任务分片问题,不能水平扩展,同一任务同一时间只能在一个节点运行 -->
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
 		</dependency>
