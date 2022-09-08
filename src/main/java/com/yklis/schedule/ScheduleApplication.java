@@ -3,8 +3,6 @@ package com.yklis.schedule;
 import org.mybatis.spring.annotation.MapperScan;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
-import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +15,8 @@ import org.springframework.context.annotation.PropertySource;
 
 import com.yklis.schedule.config.DynamicDataSourceRegister;
 import com.yklis.schedule.util.Constants;
+import com.yklis.schedule.util.GlobalScheduler;
 import com.yklis.schedule.util.GroupOfJobListener;
-import com.yklis.schedule.util.MySingleton;
 
 /**
  * 右键启动
@@ -49,34 +47,7 @@ public class ScheduleApplication implements CommandLineRunner,DisposableBean {
 	 */
 	@Override
 	public void run(String... args) throws Exception {
-		
-        SchedulerFactory factory;
-		try {
-			//默认从ClassPath读取quartz.properties
-			//也可通过参数指定其他位置的配置文件
-			factory = new StdSchedulerFactory();
-			logger.info("创建Scheduler Factory成功");
-		} catch (Exception e) {
-			
-			logger.error("创建Scheduler Factory失败:"+e.toString());
-			return;
-		}
-		
-		MySingleton mySingleton = MySingleton.getInstance();
-		
-        try {
-    		//Scheduler是单例模式(懒汉式).StdSchedulerFactory.getScheduler方法右键,Quick Type Hierarchy查看实现方法
-        	Scheduler scheduler = factory.getScheduler();
-        	//因为本人并不知道如何通过其他方式生成一个全局Scheduler对象,故此处使用另一个单例类MySingleton
-    		mySingleton.setScheduler(scheduler);
-			logger.info("获取Scheduler成功");
-		} catch (SchedulerException e) {
-
-			logger.error("获取Scheduler失败:"+e.toString());
-			return;
-
-		}
-                
+		                
         /*//手动设置Job、Trigger
         JobDetail getMessageJob = newJob(Job1.class).withIdentity("getDetailsJob", "group1").build();  
 
@@ -95,7 +66,7 @@ public class ScheduleApplication implements CommandLineRunner,DisposableBean {
 		} 
         //===================*/
                 
-        Scheduler scheduler = mySingleton.getScheduler();
+        Scheduler scheduler = GlobalScheduler.getScheduler();
         try {
             //按Job组注册JOB监听器
             scheduler.getListenerManager().addJobListener(new GroupOfJobListener(), GroupMatcher.jobGroupEquals(Constants.DEFAULT_JOB_GROUP));
@@ -120,8 +91,7 @@ public class ScheduleApplication implements CommandLineRunner,DisposableBean {
 	@Override
 	public void destroy() throws Exception {
 		
-    	MySingleton mySingleton = MySingleton.getInstance();
-    	Scheduler scheduler = mySingleton.getScheduler();
+    	Scheduler scheduler = GlobalScheduler.getScheduler();
     	
         if (scheduler != null) {
             try {

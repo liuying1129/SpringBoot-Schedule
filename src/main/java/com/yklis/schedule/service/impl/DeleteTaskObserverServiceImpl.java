@@ -14,7 +14,7 @@ import com.yklis.schedule.entity.TaskOperateTypeEntity;
 import com.yklis.schedule.service.TaskObserverService;
 import com.yklis.schedule.service.TaskSubjectService;
 import com.yklis.schedule.util.Constants;
-import com.yklis.schedule.util.MySingleton;
+import com.yklis.schedule.util.GlobalScheduler;
 
 /**
  * 观察者模式
@@ -41,8 +41,7 @@ public class DeleteTaskObserverServiceImpl implements TaskObserverService {
 	@Override
 	public void update(TaskOperateTypeEntity operateType,String strJobKey, CommCodeEntity commCodeEntity) {
 		
-        MySingleton mySingleton = MySingleton.getInstance();
-        Scheduler scheduler = mySingleton.getScheduler();
+        Scheduler scheduler = GlobalScheduler.getScheduler();
         if(null == scheduler){
             logger.warn("scheduler为空");
             return;

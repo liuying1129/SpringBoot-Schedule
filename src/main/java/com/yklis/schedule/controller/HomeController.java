@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.yklis.schedule.entity.CommCodeEntity;
 import com.yklis.schedule.util.Constants;
-import com.yklis.schedule.util.MySingleton;
+import com.yklis.schedule.util.GlobalScheduler;
 
 @RestController
 @RequestMapping("/") 
@@ -50,8 +50,7 @@ public class HomeController {
     @RequestMapping("queryAllJob")
     public String queryAllJob() {
     	    	
-		MySingleton mySingleton = MySingleton.getInstance();
-		Scheduler scheduler = mySingleton.getScheduler();
+		Scheduler scheduler = GlobalScheduler.getScheduler();
 		if(null == scheduler){
 			
             Map<String, Object> mapResponse = new HashMap<>();
@@ -167,8 +166,7 @@ public class HomeController {
     @RequestMapping("queryRunningJob")
     public String queryRunningJob() {
     	
-		MySingleton mySingleton = MySingleton.getInstance();
-		Scheduler scheduler = mySingleton.getScheduler();
+		Scheduler scheduler = GlobalScheduler.getScheduler();
 		if(null == scheduler){
 			
             Map<String, Object> mapResponse = new HashMap<>();
