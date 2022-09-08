@@ -65,7 +65,9 @@ public class ScheduleApplication implements CommandLineRunner,DisposableBean {
 		MySingleton mySingleton = MySingleton.getInstance();
 		
         try {
+    		//Scheduler是单例模式(懒汉式).StdSchedulerFactory.getScheduler方法右键,Quick Type Hierarchy查看实现方法
         	Scheduler scheduler = factory.getScheduler();
+        	//因为本人并不知道如何通过其他方式生成一个全局Scheduler对象,故此处使用另一个单例类MySingleton
     		mySingleton.setScheduler(scheduler);
 			logger.info("获取Scheduler成功");
 		} catch (SchedulerException e) {
