@@ -37,8 +37,8 @@ public class GlobalScheduler {
 		//Scheduler是单例模式(懒汉式).通过右键StdSchedulerFactory.getScheduler,Quick Type Hierarchy可查看实现方法
 		Scheduler scheduler = null;
 		try {
+			
 			scheduler = factory.getScheduler();
-			logger.info("获取Scheduler成功");
 		} catch (SchedulerException e) {
 			logger.error("获取Scheduler失败:"+e.toString());
 		}
