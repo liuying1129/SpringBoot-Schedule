@@ -14,7 +14,8 @@
     </processing-directives>
     
     <schedule>
-	    	    
+	    	
+	    <!-- 1个Job可以有多个Trigger,反之不可 -->	    
 	    <job>
 	        <name>JobRefreshTask</name>
 	        <group>GroupOfJobRefreshTask</group>
